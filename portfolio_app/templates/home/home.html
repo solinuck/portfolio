@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+
+{% block title %} Erwin Rudi || Home{% endblock %}
+
+{% block content %}
+
+<!-- header -->
+<header class="hero">
+  <div class="section-center hero-center">
+    <article class="hero-info">
+      <div class="underline">
+      </div>
+      <h1>Hey I'm Erwin</h1>
+      <h4>freelance web & mobile UI/UX Designer</h4>
+      <a href="./contact.html" class="btn hero-btn">hire me</a>
+      <!-- social icons -->
+      <ul class="social-icons hero-icons">
+        <li>
+          <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+        </li>
+        <li>
+          <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+        </li>
+        <li>
+          <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+        </li>
+        <li>
+          <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+        </li>
+      </ul>
+    </article>
+    <article class="hero-img">
+      <img src="{{ images_path }}/hero-img.jpeg" class="hero-photo" alt="john doe">
+    </article>
+  </div>
+</header>
+<!-- end of header -->
+
+<!-- about -->
+<section class="section about">
+  <div class="section-center about-center">
+    <!-- about img -->
+    <article class="about-img">
+      <img src="{{ images_path }}/about-img.jpeg" class="hero-photo" alt="about img">
+    </article>
+    <!-- about info -->
+    <article class="about-info">
+      <!-- section title -->
+      <div class="section-title about-title">
+        <h2>about me</h2>
+        <div class="underline"></div>
+      </div>
+      <!-- end of section title -->
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur doloribus
+        sit, vitae. Numquam, asperiores deserunt saepe voluptatibus
+        veniam velit accusantium reiciendis rem. Facilis dolores nisi, minus autem
+        distinctio magni fugiat
+        adipisci dolore consequatur placeat, quaerat molestiae. Libero delectus
+        aspernatur earum.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur doloribus
+        sit, vitae. Numquam, asperiores deserunt saepe voluptatibus
+        veniam velit accusantium reiciendis rem. Facilis dolores nisi, minus autem
+        distinctio magni fugiat
+        adipisci dolore consequatur placeat, quaerat molestiae. Libero delectus
+        aspernatur earum.</p>
+      <a href="./about.html" class="btn">more info</a>
+    </article>
+  </div>
+</section>
+<!-- end of about -->
+
+<!-- projects -->
+<section class="section projects">
+  <!-- section title -->
+  <div class="section-title">
+    <h2>My Projects</h2>
+    <div class="underline"></div>
+    <p class="projects-text">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est voluptas eum
+      cumque! Aut enim, facilis expedita eius laborum consectetur. Et
+      accusantium est rerum voluptatibus a dolores doloremque quidem magni mollitia?
+    </p>
+  </div>
+  <!-- end of section title -->
+  <div class="section-center projects-center">
+    <!-- single project -->
+    <a href="./projects.html" class="project-1">
+      <article class="project">
+        <img src="{{ images_path }}/project-1.jpeg" alt="single project"
+          class="project-img">
+        <div class="project-info">
+          <h4>project title</h4>
+          <p>client name</p>
+        </div>
+      </article>
+    </a>
+    <!-- end of single project -->
+
+    <!-- single project -->
+    <a href="./projects.html" class="project-2">
+      <article class="project">
+        <img src="{{ images_path }}/project-2.jpeg" alt="single project"
+          class="project-img">
+        <div class="project-info">
+          <h4>project title</h4>
+          <p>client name</p>
+        </div>
+      </article>
+    </a>
+    <!-- end of single project -->
+
+    <!-- single project -->
+    <a href="./projects.html" class="project-3">
+      <article class="project">
+        <img src="{{ images_path }}/project-3.jpeg" alt="single project"
+          class="project-img">
+        <div class="project-info">
+          <h4>project title</h4>
+          <p>client name</p>
+        </div>
+      </article>
+    </a>
+    <!-- end of single project -->
+
+    <!-- single project -->
+    <a href="./projects.html" class="project-4">
+      <article class="project">
+        <img src="{{ images_path }}/project-4.jpeg" alt="single project"
+          class="project-img">
+        <div class="project-info">
+          <h4>project title</h4>
+          <p>client name</p>
+        </div>
+      </article>
+    </a>
+    <!-- end of single project -->
+  </div>
+</section>
+<!-- end of projects -->
+
+<!-- blog -->
+<div class="section section blog">
+  <!-- section title -->
+  <div class="section-title">
+    <h2>blog</h2>
+    <div class="underline"></div>
+  </div>
+  <!-- end of section title -->
+  <div class="section-center blog-center">
+    <!-- single article -->
+    <div class="card">
+      <div class="card-side card-front">
+        <!-- front of the card -->
+        <img src="{{ images_path }}/project-1.jpeg" alt="">
+        <div class="card-info">
+          <h4>article title</h4>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque dolorum
+            vel officiis error dolor laborum ipsa repellat quaerat nesciunt hic!</p>
+          <div class="card-footer">
+            <img src="{{ images_path }}/hero-img-small.jpeg" alt="author image">
+            <p>7 min read</p>
+          </div>
+        </div>
+      </div>
+      <div class="card-side card-back">
+        <!-- front of the card -->
+        <button class="btn">
+          read more
+        </button>
+      </div>
+    </div>
+    <!-- end of single article -->
+
+    <!-- single article -->
+    <div class="card">
+      <div class="card-side card-front">
+        <!-- front of the card -->
+        <img src="{{ images_path }}/project-2.jpeg" alt="">
+        <div class="card-info">
+          <h4>article title</h4>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque dolorum
+            vel officiis error dolor laborum ipsa repellat quaerat nesciunt hic!</p>
+          <div class="card-footer">
+            <img src="{{ images_path }}/hero-img-small.jpeg" alt="author image">
+            <p>7 min read</p>
+          </div>
+        </div>
+      </div>
+      <div class="card-side card-back">
+        <!-- front of the card -->
+        <button class="btn">
+          read more
+        </button>
+      </div>
+    </div>
+    <!-- end of single article -->
+
+    <!-- single article -->
+    <div class="card">
+      <div class="card-side card-front">
+        <!-- front of the card -->
+        <img src="{{ images_path }}/project-3.jpeg" alt="">
+        <div class="card-info">
+          <h4>article title</h4>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque dolorum
+            vel officiis error dolor laborum ipsa repellat quaerat nesciunt hic!</p>
+          <div class="card-footer">
+            <img src="{{ images_path }}/hero-img-small.jpeg" alt="author image">
+            <p>7 min read</p>
+          </div>
+        </div>
+      </div>
+      <div class="card-side card-back">
+        <!-- front of the card -->
+        <button class="btn">
+          read more
+        </button>
+      </div>
+    </div>
+    <!-- end of single article -->
+
+    <!-- single article -->
+    <div class="card">
+      <div class="card-side card-front">
+        <!-- front of the card -->
+        <img src="{{ images_path }}/project-4.jpeg" alt="">
+        <div class="card-info">
+          <h4>article title</h4>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque dolorum
+            vel officiis error dolor laborum ipsa repellat quaerat nesciunt hic!</p>
+          <div class="card-footer">
+            <img src="{{ images_path }}/hero-img-small.jpeg" alt="author image">
+            <p>7 min read</p>
+          </div>
+        </div>
+      </div>
+      <div class="card-side card-back">
+        <!-- front of the card -->
+        <button class="btn">
+          read more
+        </button>
+      </div>
+    </div>
+    <!-- end of single article -->
+  </div>
+</div>
+<!--end of  blog -->
+
+
+
+
+{% endblock%}
