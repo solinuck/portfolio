@@ -43,7 +43,7 @@ def register_view():
                 (username, generate_password_hash(password)),
             )
             db.commit()
-            return redirect(url_for("auth.login"))
+            return redirect(url_for("auth.login_view"))
 
         flash(error)
 
@@ -70,7 +70,7 @@ def login_view():
         if error is None:
             session.clear()
             session["user_id"] = user["id"]
-            return redirect(url_for("index"))
+            return redirect(url_for("blog.bloglist_view"))
 
         flash(error)
 
@@ -94,14 +94,14 @@ def load_logged_in_user():
 @bp.route("/logout")
 def logout_view():
     session.clear()
-    return redirect(url_for("index"))
+    return redirect(url_for("blog.bloglist_view"))
 
 
 def login_required(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
         if g.user is None:
-            return redirect(url_for("auth.login"))
+            return redirect(url_for("auth.login_view"))
 
         return view(**kwargs)
 
