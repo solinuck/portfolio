@@ -1,11 +1,26 @@
 {% extends "base.html" %}
 
+{% block title %} Register {% endblock%}
+
 {% block content %}
-<form method="post">
-  <label for="username">Username</label>
-  <input name="username" id="username" required>
-  <label for="password">Password</label>
-  <input type="password" name="password" id="password" required>
-  <input type="submit" value="Register">
-</form>
+<!-- Register Form -->
+<div class="register">
+
+  <div class="form">
+    <div class="form-title">
+      <h2>registration form</h2>
+    </div>
+    <div class="form-box">
+      <div class="flash">replace me</div>
+      <form class="form" method="post">
+        <input type="text" name="username" id="username" placeholder="Username">
+        <input type="text" type="password" name="password" id="password"
+          placeholder="Password">
+        <input class="submit-btn" type="submit" value="Register">
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- End of Register Form -->
 {% endblock %}

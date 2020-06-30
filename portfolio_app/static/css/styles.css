@@ -683,6 +683,7 @@ Footer
 ===============
 */
 .footer {
+  height: 11.5rem;
   padding-bottom: 2rem;
   background: #222;
   display: grid;
@@ -704,4 +705,66 @@ Footer
 .footer p {
   font-size: 1.25rem;
   text-transform: capitalize;
+}
+
+/*
+===============
+Register Page
+===============
+ */
+.register {
+  /* minus navbar minus footer*/
+  height: calc(100vh - 5rem - 11.5rem);
+  background: var(--clr-primary-10);
+  display: grid;
+  place-items: center;
+}
+
+.form-box {
+  background: var(--clr-grey-9);
+  border: 3px solid var(--clr-primary-5);
+  border-radius: 1rem;
+  padding: 1rem 3rem 1rem 3rem;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-row-gap: 1.5rem;
+}
+
+input[type=text] {
+  width: 17rem;
+  padding: 0.4rem;
+  border: 2px solid var(--clr-grey-8);
+  border-radius: 0.3rem;
+  outline: none;
+  transition: var(--transition);
+  color: var(--clr-primary-1);
+}
+
+input[type=text]:focus {
+  border: 2px solid var(--clr-primary-1);
+}
+
+input[type=submit] {
+  width: 7rem;
+  padding: 0.4rem;
+  justify-self: center;
+  background: var(--clr-primary-1);
+  color: white;
+  border: none;
+  border-radius: 0.3rem;
+  outline: none;
+}
+
+.flash {
+  text-align: center;
+  padding-bottom: 0.5rem;
+  color: red;
+  opacity: 0;
+}
+
+.showFlash {
+  opacity: 1;
 }

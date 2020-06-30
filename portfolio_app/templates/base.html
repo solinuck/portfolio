@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>{% block title %} {% endblock %}</title>
+  <title>Blog || {% block title %} {% endblock %}</title>
 
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')}}">
   <link rel="stylesheet"
@@ -20,7 +20,7 @@
     <div class="nav-center">
       <!-- nav header -->
       <div class="nav-header">
-        <img src="./static/images/logo.svg" class="nav-logo" alt="nav logo">
+        <img src="/static/images/logo.svg" class="nav-logo" alt="nav logo">
         <button class="nav-btn" id="nav-btn">
           <i class="fas fa-bars"></i>
         </button>
@@ -84,9 +84,13 @@
     </div>
   </aside>
   <!-- end of sidebar -->
+
+  <!-- ********************** content ********************** -->
   {% block content %}
 
   {% endblock %}
+  <!-- ******************** end of content ******************** -->
+
 
   <!-- footer -->
   <footer class="footer">
@@ -112,6 +116,24 @@
   <script type="text/javascript" src="{{ url_for('static', filename='js/app.js')}}">
 
   </script>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <script type="text/javascript">
+          const messages = {{messages | safe}};
+          const flash_field = document.querySelector(".flash");
+          for (const message of messages) {
+            flash_field.firstChild.textContent = `${message}`;
+          }
+          // flash_field.classList.add("showFlash")
+          flash_field.style.opacity = 1
+          setTimeout(() => {
+            // flash_field.classList.remove("showFlash")
+            flash_field.style.opacity = 0
+          }, 3000)
+
+        </script>
+    {% endif %}
+  {% endwith %}
 </body>
 
 </html>
