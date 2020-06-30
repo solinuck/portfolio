@@ -237,6 +237,7 @@ Navbar
   border-color: transparent;
   color: var(--clr-primary-5);
   cursor: pointer;
+  outline: none;
   font-size: 2rem;
   justify-self: end;
 }
@@ -357,6 +358,7 @@ Sidebar
   transition: var(--transition);
   color: #bb2525;
   cursor: pointer;
+  outline: none;
 }
 
 .close-btn:hover {
@@ -728,13 +730,14 @@ Register Page
 }
 
 .form {
+  min-width: 17rem;
   display: grid;
   grid-template-columns: 1fr;
   grid-row-gap: 1.5rem;
 }
 
 input[type=text] {
-  width: 17rem;
+  width: 100%;
   padding: 0.4rem;
   border: 2px solid var(--clr-grey-8);
   border-radius: 0.3rem;
@@ -767,4 +770,8 @@ input[type=submit] {
 
 .showFlash {
   opacity: 1;
+}
+
+.form-title {
+  text-align: center;
 }
