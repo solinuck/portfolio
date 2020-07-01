@@ -54,16 +54,16 @@
       <!-- nav links -->
       <ul class="sidebar-links">
         <li>
-          <a href="index.html">home</a>
+          <a href="/">home</a>
         </li>
         <li>
-          <a href="projects.html">projects</a>
+          <a href="/about">about</a>
         </li>
         <li>
-          <a href="about.html">about</a>
+          <a href="/projects">projects</a>
         </li>
         <li>
-          <a href="contact.html">contact</a>
+          <a href="/blog">blog</a>
         </li>
       </ul>
       <!-- social icons -->
@@ -116,7 +116,7 @@
   <script type="text/javascript" src="{{ url_for('static', filename='js/app.js')}}">
 
   </script>
-  <!-- {% with messages = get_flashed_messages() %}
+  {% with messages = get_flashed_messages() %}
     {% if messages %}
         <script type="text/javascript">
           const messages = {{messages | safe}};
@@ -133,7 +133,7 @@
 
         </script>
     {% endif %}
-  {% endwith %} -->
+  {% endwith %}
 </body>
 
 </html>
