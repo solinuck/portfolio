@@ -176,6 +176,10 @@ p {
   max-width: 1170px;
 }
 
+.center {
+  text-align: center;
+}
+
 @media screen and (min-width: 992px) {
   .section-center {
     width: 95vw;
@@ -711,12 +715,12 @@ Footer
 
 /*
 ===============
-Register Page
+Forms
 ===============
  */
-.register {
+.single-page {
   /* minus navbar minus footer*/
-  height: calc(100vh - 5rem - 11.5rem);
+  min-height: calc(100vh - 5rem - 11.5rem);
   background: var(--clr-primary-10);
   display: grid;
   place-items: center;
@@ -731,12 +735,9 @@ Register Page
 
 .form {
   min-width: 17rem;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-row-gap: 1.5rem;
 }
 
-input[type=text], input[type=password] {
+input[type=text], input[type=password], textarea {
   width: 100%;
   padding: 0.4rem;
   border: 2px solid var(--clr-grey-8);
@@ -744,6 +745,7 @@ input[type=text], input[type=password] {
   outline: none;
   transition: var(--transition);
   color: var(--clr-primary-1);
+  margin: 0.75rem 0;
 }
 
 input[type=text]:focus, input[type=password]:focus {
@@ -753,7 +755,8 @@ input[type=text]:focus, input[type=password]:focus {
 input[type=submit] {
   width: 7rem;
   padding: 0.4rem;
-  justify-self: center;
+  margin: 0.75rem auto;
+  text-align: center;
   background: var(--clr-primary-1);
   color: white;
   border: none;
@@ -772,6 +775,19 @@ input[type=submit] {
   opacity: 1;
 }
 
-.form-title {
-  text-align: center;
+.create-article-center {
+  margin: 2rem auto;
+}
+
+.form-label {
+  font-size: 1.2rem;
+}
+
+#title, #body {
+  margin-top: 0;
+}
+
+.article-input {
+  outline: none;
+  resize: none;
 }

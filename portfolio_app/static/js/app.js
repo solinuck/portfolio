@@ -20,3 +20,16 @@ closeBtn.addEventListener("click", function() {
 });
 // set year
 date.innerHTML = new Date().getFullYear();
+
+// add resizable textarea
+const txta = document.getElementsByTagName('textarea');
+console.log("hello world");
+for (let i = 0; i < txta.length; i++) {
+  txta[i].setAttribute('style', 'height:' + (txta[i].scrollHeight) + 'px;overflow-y:hidden;');
+  txta[i].addEventListener("input", OnInput, false);
+}
+
+function OnInput() {
+  this.style.height = 'auto';
+  this.style.height = (this.scrollHeight) + 'px';
+}

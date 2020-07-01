@@ -116,7 +116,7 @@
   <script type="text/javascript" src="{{ url_for('static', filename='js/app.js')}}">
 
   </script>
-  {% with messages = get_flashed_messages() %}
+  <!-- {% with messages = get_flashed_messages() %}
     {% if messages %}
         <script type="text/javascript">
           const messages = {{messages | safe}};
@@ -133,7 +133,7 @@
 
         </script>
     {% endif %}
-  {% endwith %}
+  {% endwith %} -->
 </body>
 
 </html>

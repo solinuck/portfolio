@@ -1,13 +1,29 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
-{% block title %}New Post{% endblock %}
+{% block title %} Write Article {% endblock%}
 
 {% block content %}
-  <form method="post">
-    <label for="title">Title</label>
-    <input name="title" id="title" value="{{ request.form['title'] }}" required>
-    <label for="body">Body</label>
-    <textarea name="body" id="body">{{ request.form['body'] }}</textarea>
-    <input type="submit" value="Save">
-  </form>
+<!-- Register Form -->
+<div class="single-page">
+
+  <div class="section-center create-article-center">
+    <div class="center">
+      <h2>write your article</h2>
+    </div>
+    <div class="form-box ">
+      <div class="flash center">replace me</div>
+      <form class="form" method="post">
+        <label class="form-label" for="title">Title</label>
+        <input type="text" name="title" id="title" value="{{ request.form['title'] }}" required>
+        <label class="form-label" for="body">Body</label>
+        <textarea class="article-input" type="text" name="body" rows="20" id="body">{{ request.form['body'] }}</textarea>
+        <div class="center">
+          <input class="submit-btn" type="submit" value="Publish">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- End of Register Form -->
 {% endblock %}
