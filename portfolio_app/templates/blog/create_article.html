@@ -4,7 +4,7 @@
 
 {% block content %}
 <!-- Register Form -->
-<div class="single-page">
+<div class=" section single-page">
 
   <div class="section-center create-article-center">
     <div class="center">
@@ -16,9 +16,9 @@
         <label class="form-label" for="title">Title</label>
         <input type="text" name="title" id="title" value="{{ request.form['title'] }}" required>
         <label class="form-label" for="body">Introduction</label>
-        <textarea class="article-input" type="text" name="intro" rows="5" id="body">post["intro"]</textarea>
+        <textarea class="article-input" type="text" maxlength="200" name="intro" rows="5" id="body">{% if post %}{{post["intro"]}}{% endif %}</textarea>
         <label class="form-label" for="body">Body</label>
-        <textarea class="article-input" type="text" name="body" rows="10" id="body">post["body"]</textarea>
+        <textarea class="article-input" type="text" name="body" rows="10" id="body">{% if post %}{{post["body"]}}{% endif %}</textarea>
         <div class="center">
           <input class="submit-btn" type="submit" value="Publish">
         </div>

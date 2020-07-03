@@ -28,7 +28,7 @@ def bloglist_view():
 
 @bp.route("/create", methods=("GET", "POST"))
 @login_required
-def create_view(post=None):
+def create_view():
     if request.method == "POST":
         title = request.form["title"]
         body = request.form["body"]
@@ -50,7 +50,7 @@ def create_view(post=None):
             db.commit()
             return redirect(url_for("blog.bloglist_view"))
 
-    return render_template("blog/create_article.html", post=post)
+    return render_template("blog/create_article.html")
 
 
 def get_post(id, check_author=True):
@@ -74,8 +74,8 @@ def get_post(id, check_author=True):
     return post
 
 
-@bp.route("/<int:id>/")
-def single_article_view(id):
+@bp.route("/<title>_<int:id>/")
+def single_article_view(id, title):
     post = get_post(id, False)
     return render_template("blog/article.html", post=post)
 
@@ -84,11 +84,29 @@ def single_article_view(id):
 @login_required
 def update_view(id):
     post = get_post(id)
-    db = get_db()
-    db.execute("DELETE FROM post WHERE id = ?", (id,))
-    db.commit()
 
-    return render_template("blog/create_article.html", post=post)
+    if request.method == "POST":
+        title = request.form["title"]
+        body = request.form["body"]
+        intro = request.form["intro"]
+        error = None
+
+        if not title:
+            error = "Title is required."
+
+        if error is not None:
+            flash(error)
+        else:
+            db = get_db()
+            db.execute(
+                "UPDATE post SET title = ?, intro = ?, body = ?"
+                " WHERE id = ?",
+                (title, intro, body, id),
+            )
+            db.commit()
+            return redirect(url_for("blog.bloglist_view"))
+
+    return render_template("blog/update.html", post=post)
 
 
 @bp.route("<int:id>/delete")

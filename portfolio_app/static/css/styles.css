@@ -748,7 +748,8 @@ input[type=text], input[type=password], textarea {
   margin: 0.75rem 0;
 }
 
-input[type=text]:focus, input[type=password]:focus {
+input[type=text]:focus, input[type=password]:focus, textarea:focus {
+  outline: none;
   border: 2px solid var(--clr-primary-1);
 }
 
@@ -795,7 +796,8 @@ input[type=submit] {
 
 /* bloglist */
 .author-options {
-  margin: 0.5rem;
+  text-align: center;
+  margin: 2rem auto 0 auto;
   width: 120px;
 }
 
@@ -803,9 +805,6 @@ input[type=submit] {
 .blog-article {
   min-height: calc(100vh - 5rem - 11.5rem);
   margin: 2rem;
-  /* display: grid;
-  flex-direction: 1fr;
-  justify-content: center; */
 }
 
 .single-article {
@@ -824,8 +823,9 @@ input[type=submit] {
 
 .article-body {
   font-size: 1.2rem;
-  padding: 2rem 0;
+  padding: 1rem 0;
   color: black;
+  text-align: justify;
 }
 
 .danger {

@@ -27,9 +27,9 @@
             </div>
           </div>
         </div>
+        <!-- end of front of the card -->
         <div class="card-side card-back">
-          <!-- end of front of the card -->
-            <a href="{{ url_for('blog.single_article_view', id=post['id']) }}" class="btn">read more</a>
+            <a href="{{ url_for('blog.single_article_view', id=post['id'], title=post['title']) }}" class="btn">read more</a>
         </div>
       </div>
       <!-- end of single article -->
@@ -37,7 +37,7 @@
   </div>
   {% if g.user %}
     <div class="author-options">
-      <a class="action btn" href="{{ url_for('blog.create_view') }}"> Publish new article</a>
+      <a class="action btn" href="{{ url_for('blog.create_view') }}"> new article</a>
     </div>
   {% endif %}
 </div>
