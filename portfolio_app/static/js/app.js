@@ -32,3 +32,8 @@ function OnInput() {
   this.style.height = 'auto';
   this.style.height = (this.scrollHeight) + 'px';
 }
+
+// send filesize as a cookie
+function filesize(elem){
+    document.cookie = `filesize=${elem.files[0].size}`;
+  }

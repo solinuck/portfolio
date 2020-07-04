@@ -1,3 +1,4 @@
+import os
 from flask import (
     Blueprint,
     render_template,
@@ -7,7 +8,9 @@ from flask import (
     redirect,
     url_for,
     abort,
+    current_app,
 )
+from werkzeug.utils import secure_filename
 
 from .auth import login_required
 from .db import get_db
@@ -33,13 +36,32 @@ def create_view():
         title = request.form["title"]
         body = request.form["body"]
         intro = request.form["intro"]
+        image = request.files["image"]
         error = None
+
+        if request.files["image"] and "filesize" in request.cookies:
+            if not allowed_image_filesize():
+                error = "Filesize exceeded maximum limit"
+
+            if image.filename == "":
+                error = "no filename"
+
+            if allowed_image():
+                filename = secure_filename(image.filename)
+                image.save(
+                    os.path.join(
+                        current_app.config["IMAGE_UPLOADS"], filename
+                    )
+                )
+            else:
+                error = "That file extension is not allowed"
 
         if not title:
             error = "Title is required."
 
         if error is not None:
             flash(error)
+            redirect(request.url)
         else:
             db = get_db()
             db.execute(
@@ -117,3 +139,26 @@ def delete_view(id):
     db.execute("DELETE FROM post WHERE id = ?", (id,))
     db.commit()
     return redirect(url_for("blog.bloglist_view"))
+
+
+def allowed_image(filename):
+    # We only want files with a . in the filename
+    if "." not in filename:
+        return False
+
+    # Split the extension from the filename
+    ext = filename.rsplit(".", 1)[1]
+
+    # Check if the extension is in ALLOWED_IMAGE_EXTENSIONS
+    if ext.upper() in current_app.config["ALLOWED_IMAGE_EXTENSIONS"]:
+        return True
+    else:
+        return False
+
+
+def allowed_image_filesize(filesize):
+
+    if int(filesize) <= current_app.config["MAX_IMAGE_FILESIZE"]:
+        return True
+    else:
+        return False
