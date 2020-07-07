@@ -40,13 +40,13 @@ def create_view():
         error = None
 
         if request.files["image"] and "filesize" in request.cookies:
-            if not allowed_image_filesize():
+            if not allowed_image_filesize(request.cookies["filesize"]):
                 error = "Filesize exceeded maximum limit"
 
             if image.filename == "":
                 error = "no filename"
 
-            if allowed_image():
+            if allowed_image(image.filename):
                 filename = secure_filename(image.filename)
                 image.save(
                     os.path.join(

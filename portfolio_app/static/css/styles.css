@@ -647,7 +647,10 @@ Blog
 }
 
 .card-info {
+  height: 14rem;
   padding: 1rem 1.5rem;
+  display: grid;
+  grid-template-rows: auto 1fr 1fr;
 }
 
 .card-front img {
@@ -657,6 +660,8 @@ Blog
 }
 
 .card-footer {
+  /* justify-self: end; */
+  align-self: end;
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
@@ -849,6 +854,10 @@ Timeline
   max-width: 40rem;
 }
 
+.timeline {
+  background: var(--clr-grey-10);
+}
+
 .timeline-item {
   border-top: 2px dashed var(--clr-primary-5);
   margin: 0;
@@ -907,4 +916,77 @@ Timeline
 .timeline-item:nth-child(odd) .number {
   right: 0;
   transform: translateX(50%);
+}
+
+/*
+===============
+Skills
+===============
+*/
+@media screen and (min-width: 768px) {
+  .skills-center {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2rem;
+  }
+}
+
+.skills {
+  background: var(--clr-primary-9);
+}
+
+.skills h3 {
+  margin: 1.5 0;
+  color: var(--clr-primary-1);
+}
+
+.skill {
+  margin-bottom: 1.25rem;
+}
+
+.skill p {
+  margin-bottom: 0.5rem;
+  text-transform: capitalize;
+  color: var(--clr-primary-1);
+}
+
+.skill-container {
+  background: var(--clr-white);
+  height: 1rem;
+  width: 100%;
+  border-radius: var(--radius);
+  position: relative;
+}
+
+.skill-value {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: var(--clr-primary-5);
+  border-radius: var(--radius);
+  height: 100%;
+  width: 50%;
+}
+
+.value-70 {
+  width: 70%;
+}
+
+.value-80 {
+  width: 80%;
+}
+
+.skill-text {
+  position: absolute;
+  top: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.skill-text-70 {
+  left: 70%;
+}
+
+.skill-text-80 {
+  left: 80%;
 }

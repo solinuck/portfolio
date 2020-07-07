@@ -14,7 +14,10 @@ def home_view():
         " FROM post p JOIN user u ON p.author_id = u.id"
         " ORDER BY created DESC"
     ).fetchall()
-    return render_template("/home/index.html", posts=posts)
+    n_article = len(posts) if len(posts) < 5 else 5
+    return render_template(
+        "/home/index.html", posts=posts, n_article=n_article
+    )
 
 
 @bp.route("/about")

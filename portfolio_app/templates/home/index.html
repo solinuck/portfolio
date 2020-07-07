@@ -12,7 +12,7 @@
       </div>
       <h1>Hey I'm Erwin</h1>
       <h4>freelance web & mobile UI/UX Designer</h4>
-      <a href="./contact.html" class="btn hero-btn">hire me</a>
+      <!-- <a href="./contact.html" class="btn hero-btn">hire me</a> -->
       <!-- social icons -->
       <ul class="social-icons hero-icons">
         <li>
@@ -147,8 +147,7 @@
   </div>
   <!-- end of section title -->
   <div class="section-center blog-center">
-    {% if posts %}
-    {% for i in range(posts[-1]["id"] + 1) %}
+    {% for i in range( {{ n_article }} ) %}
       <!-- single article -->
       <div class="card">
         <div class="card-side card-front">
@@ -170,7 +169,7 @@
       </div>
       <!-- end of single article -->
     {% endfor %}
-    {% endif %}
+
   </div>
   <div class="btn-center">
     <a href="/blog" class="btn">view all</a>
