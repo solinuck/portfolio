@@ -21,6 +21,11 @@
           <div class="card-info">
             <h4>{{post['title']}}</h4>
             <p>{{post['intro']}}</p>
+            <div class="tags">
+              {% for tag in tags[loop.index - 1] %}
+                <span class="tag">{{tag}}</span>
+              {% endfor %}
+            </div>
             <div class="card-footer">
               <img src="../../static/images/hero-img-small.jpeg" alt="author image">
               <p>{{(post['created'] | string )[2:10] }}</p>

@@ -147,7 +147,7 @@
   </div>
   <!-- end of section title -->
   <div class="section-center blog-center">
-    {% for i in range( n_article ) %}
+    {% for i in range(n_article) %}
       <!-- single article -->
       <div class="card">
         <div class="card-side card-front">
@@ -156,6 +156,11 @@
           <div class="card-info">
             <h4>{{posts[i]['title']}}</h4>
             <p>{{posts[i]['intro']}}</p>
+            <div class="tags">
+              {% for tag in tags[loop.index - 1] %}
+                <span class="tag">{{tag}}</span>
+              {% endfor %}
+            </div>
             <div class="card-footer">
               <img src="../../static/images/hero-img-small.jpeg" alt="author image">
               <p>{{(posts[i]['created'] | string )[2:10] }}</p>

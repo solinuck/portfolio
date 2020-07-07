@@ -36,6 +36,7 @@ Variables
   --clr-grey-8: hsl(210, 31%, 80%);
   --clr-grey-9: hsl(212, 33%, 89%);
   --clr-grey-10: hsl(210, 36%, 96%);
+  --clr-red: #ff0000;
   --clr-white: #fff;
   --ff-primary: "Roboto", sans-serif;
   --ff-secondary: "Open Sans", sans-serif;
@@ -650,7 +651,7 @@ Blog
   height: 14rem;
   padding: 1rem 1.5rem;
   display: grid;
-  grid-template-rows: auto 1fr 1fr;
+  grid-template-rows: auto 1fr auto auto;
 }
 
 .card-front img {
@@ -801,6 +802,66 @@ input[type=submit] {
   resize: none;
 }
 
+.article-tags {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(5rem, 1fr));
+  grid-gap: 1rem;
+}
+
+.tag-field {
+  height: 60px;
+  display: grid;
+  grid-template-rows: 1fr;
+  align-items: center;
+}
+
+.tag-text {
+  display: none;
+}
+
+.tag-form {
+  position: relative;
+}
+
+.add-tag-btn, .delete-tag-btn {
+  position: absolute;
+  top: 0.3rem;
+  left: 3rem;
+  /* font-size: 1.3rem; */
+  background: var(--clr-primary-5);
+  color: var(--clr-white);
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.delete-tag-btn {
+  background: var(--clr-red);
+  left: 5rem;
+}
+
+.create-tag {
+  margin-top: 1rem;
+}
+
+.tags {
+  text-align: center;
+  margin: 0.4rem 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(1rem, 4rem));
+  grid-gap: 0.7rem;
+}
+
+.tag {
+  font-size: ;
+  padding: 0.1rem 0;
+  background: var(--clr-primary-9);
+  border-radius: 0.25rem;
+}
+
 /* bloglist */
 .btn-center {
   text-align: center;
@@ -836,8 +897,8 @@ input[type=submit] {
 }
 
 .danger {
-  background-color: #ff0000;
-  color: black;
+  background-color: var(--clr-red);
+  color: var(--clr-white);
 }
 
 .danger:hover {
@@ -990,4 +1051,8 @@ Skills
 
 .skill-text-80 {
   left: 80%;
+}
+
+.show {
+  display: block;
 }
