@@ -663,8 +663,9 @@ Blog
   /* justify-self: end; */
   align-self: end;
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto auto 1fr;
   align-items: center;
+  grid-gap: 1rem;
 }
 
 .card-footer img {

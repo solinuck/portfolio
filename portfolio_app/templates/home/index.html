@@ -158,6 +158,7 @@
             <p>{{posts[i]['intro']}}</p>
             <div class="card-footer">
               <img src="../../static/images/hero-img-small.jpeg" alt="author image">
+              <p>{{(posts[i]['created'] | string )[2:10] }}</p>
               <p>7 min read </p>
             </div>
           </div>
