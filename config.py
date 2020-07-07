@@ -11,9 +11,9 @@ class Config(object):
     IMAGE_UPLOADS = f"{dir_path}/portfolio_app/static/images/blog_uploads"
     DATABASE = f"{dir_path}/instance/flaskr.sqlite"
     ALLOWED_IMAGE_EXTENSIONS = ["JPEG", "JPG", "PNG", "GIF"]
-    # MAX_CONTENT_LENGTH = 50 * 1024 * 1024
     MAX_IMAGE_FILESIZE = 0.5 * 1024 * 1024
     IMAGES_PATH = "http://localhost:5000/static/images"
+    IMAGE_UPLOADS_REL = "http://localhost:5000/static/images/blog_uploads"
 
 
 class ProductionConfig(Config):

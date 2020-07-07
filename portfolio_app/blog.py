@@ -22,7 +22,7 @@ bp = Blueprint("blog", __name__, url_prefix="/blog")
 def bloglist_view():
     db = get_db()
     posts = db.execute(
-        "SELECT p.id, title, intro, body, created, author_id, username"
+        "SELECT p.id, title, imagename, intro, body, created, author_id, username"
         " FROM post p JOIN user u ON p.author_id = u.id"
         " ORDER BY created DESC"
     ).fetchall()
@@ -47,12 +47,9 @@ def create_view():
                 error = "no filename"
 
             if allowed_image(image.filename):
-                filename = secure_filename(image.filename)
-                image.save(
-                    os.path.join(
-                        current_app.config["IMAGE_UPLOADS"], filename
-                    )
-                )
+                imagename = secure_filename(image.filename)
+
+                image.save(os.path.join(current_app.config["IMAGE_UPLOADS"], imagename))
             else:
                 error = "That file extension is not allowed"
 
@@ -65,9 +62,9 @@ def create_view():
         else:
             db = get_db()
             db.execute(
-                "INSERT INTO post (title, intro, body, author_id)"
-                " VALUES (?, ?, ?, ?)",
-                (title, intro, body, g.user["id"]),
+                "INSERT INTO post (title, imagename, intro, body, author_id)"
+                " VALUES (?, ?, ?, ?, ?)",
+                (title, imagename, intro, body, g.user["id"]),
             )
             db.commit()
             return redirect(url_for("blog.bloglist_view"))
@@ -79,7 +76,7 @@ def get_post(id, check_author=True):
     post = (
         get_db()
         .execute(
-            "SELECT p.id, title, intro, body, created, author_id, username"
+            "SELECT p.id, title, imagename, intro, body, created, author_id, username"
             " FROM post p JOIN user u ON p.author_id = u.id"
             " WHERE p.id = ?",
             (id,),
@@ -111,19 +108,34 @@ def update_view(id):
         title = request.form["title"]
         body = request.form["body"]
         intro = request.form["intro"]
+        image = request.files["image"]
         error = None
 
         if not title:
             error = "Title is required."
+
+        if request.files["image"] and "filesize" in request.cookies:
+            if not allowed_image_filesize(request.cookies["filesize"]):
+                error = "Filesize exceeded maximum limit"
+
+            if image.filename == "":
+                error = "no filename"
+
+            if allowed_image(image.filename):
+                imagename = secure_filename(image.filename)
+
+                image.save(os.path.join(current_app.config["IMAGE_UPLOADS"], imagename))
+            else:
+                error = "That file extension is not allowed"
 
         if error is not None:
             flash(error)
         else:
             db = get_db()
             db.execute(
-                "UPDATE post SET title = ?, intro = ?, body = ?"
+                "UPDATE post SET title = ?, imagename = ?, intro = ?, body = ?"
                 " WHERE id = ?",
-                (title, intro, body, id),
+                (title, imagename, intro, body, id),
             )
             db.commit()
             return redirect(url_for("blog.bloglist_view"))
