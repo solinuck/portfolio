@@ -3,6 +3,8 @@
 {% block title %}" Blog - {{ post['title'] }}"{% endblock %}
 
 {% block content %}
+
+  <img class="single-article-image" src="{{ config['IMAGE_UPLOADS_REL'] }}/{{ post['imagename'] }}" alt="">
   <div class="blog-article">
     <article class="single-article section-center">
       <h1 class="article-title">{{ post['title'] }}</h1>

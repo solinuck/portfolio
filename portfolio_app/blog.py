@@ -39,7 +39,11 @@ def create_view():
         intro = request.form["intro"]
         image = request.files["image"]
         imagename = "project-3.jpeg"
-        tags = [request.form[f"tag-{n}"] for n in range(5) if f"tag-{n}" in request.form]
+        tags = [
+            request.form[f"tag-{n}"]
+            for n in range(5)
+            if f"tag-{n}" in request.form
+        ]
 
         error = None
 
@@ -53,7 +57,11 @@ def create_view():
             if allowed_image(image.filename):
                 imagename = secure_filename(image.filename)
 
-                image.save(os.path.join(current_app.config["IMAGE_UPLOADS"], imagename))
+                image.save(
+                    os.path.join(
+                        current_app.config["IMAGE_UPLOADS"], imagename
+                    )
+                )
             else:
                 error = "That file extension is not allowed."
 
@@ -111,6 +119,7 @@ def single_article_view(id, title):
 @login_required
 def update_view(id):
     post = get_post(id)
+    tags = eval(post["tags"])
 
     if request.method == "POST":
         title = request.form["title"]
@@ -118,13 +127,17 @@ def update_view(id):
         intro = request.form["intro"]
         image = request.files["image"]
         imagename = "project-3.jpeg"
-        tags = [request.form[f"tag-{n}"] for n in range(5) if f"tag-{n}" in request.form]
+        tags = [
+            request.form[f"tag-{n}"]
+            for n in range(5)
+            if f"tag-{n}" in request.form
+        ]
         error = None
 
         if not title:
             error = "Title is required."
 
-        if len(tags) == 0:
+        if tags[0] == "":
             error = "One tag is required."
 
         if request.files["image"] and "filesize" in request.cookies:
@@ -137,7 +150,11 @@ def update_view(id):
             if allowed_image(image.filename):
                 imagename = secure_filename(image.filename)
 
-                image.save(os.path.join(current_app.config["IMAGE_UPLOADS"], imagename))
+                image.save(
+                    os.path.join(
+                        current_app.config["IMAGE_UPLOADS"], imagename
+                    )
+                )
             else:
                 error = "That file extension is not allowed"
 
@@ -153,7 +170,7 @@ def update_view(id):
             db.commit()
             return redirect(url_for("blog.bloglist_view"))
 
-    return render_template("blog/update.html", post=post)
+    return render_template("blog/update.html", post=post, tags=tags)
 
 
 @bp.route("<int:id>/delete")

@@ -11,13 +11,50 @@
     </div>
     <div class="form-box ">
       <div class="flash center">replace me</div>
-      <form class="form" method="post">
+
+      <form class="form" method="post" enctype="multipart/form-data">
+        <!-- Title -->
         <label class="form-label" for="title">Title</label>
-        <input type="text" name="title" id="title" value="{{ request.form['title'] or post['title'] }}" required>
+        <input type="text" name="title" maxlength="50" id="title" value="{{ request.form['title'] or post['title'] }}" required>
+        <!-- End of Title -->
+
+        <!-- Image input -->
+        <div class="image-input-container">
+
+          <input type="file" class="image-input" name="image" id="image" oninput="filesize(this)" value="Select file" >
+          <label class="custom-file-label form-label" for="image"><i class="fas fa-upload"></i> Select image</label>
+
+          <span class="selected-image">No image selected</span>
+        </div>
+
+        <!-- End of Image input -->
+
+        <!-- Intro -->
         <label class="form-label" for="body">Introduction</label>
         <textarea class="article-input" type="text" maxlength="200" name="intro" rows="5" id="body">{{ request.form['intro'] or post['intro'] }}</textarea>
+        <!-- End of Intro -->
+
+        <!-- Body -->
         <label class="form-label" for="body">Body</label>
         <textarea class="article-input" type="text" name="body" rows="10" id="body">{{ request.form['body'] or post['body'] }}</textarea>
+        <!-- End of Body -->
+
+        <!-- Tags -->
+        <div class="tag-form">
+          <label class="form-label" for="tags">Tags</label>
+          <span class="add-tag-btn" id="add-btn">+</span>
+          <span class="delete-tag-btn">-</span>
+          <div class="tag-field">
+            <span class="tag-text">Add at least one Tag</span>
+            <div class="article-tags">
+              {% for tag in tags %}
+              <input class="create-tag" name="tag-0" id="tag" value="{{ request.form['tags'] or tag }}">
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <!-- End of Tags -->
+
         <div class="center">
           <input class="submit-btn" type="submit" value="Publish">
         </div>

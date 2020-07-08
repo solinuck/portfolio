@@ -67,4 +67,14 @@ if (addTagBtn) {
       }
     }
   });
+
+  // show image name for image input in create_article
+  const input = document.querySelector('.image-input');
+  const selectedImage = document.querySelector('.selected-image');
+
+  input.addEventListener('change', function(e) {
+    let fileName = e.target.value.split("\\").pop();
+
+    selectedImage.innerText = fileName;
+  });
 }
