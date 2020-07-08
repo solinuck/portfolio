@@ -635,8 +635,33 @@ Blog
 .card-back {
   background: var(--clr-primary-9);
   transform: rotateY(180deg);
-  display: grid;
-  place-items: center;
+  padding: 1.5rem;
+}
+
+.article-beginning {
+  position: relative;
+  overflow: hidden;
+  height: 90%;
+}
+
+.fade-out {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(to bottom, transparent, var(--clr-primary-9));
+}
+
+.article-beginning p {
+  text-align: justify;
+  color: var(--clr-primary-6);
+}
+
+.read-more {
+  margin: 1rem 0;
+  bottom: 2rem;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  position: absolute
 }
 
 .card:hover .card-front {
@@ -882,15 +907,27 @@ input[type=submit] {
   text-align: center;
   margin: 0.4rem 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(1rem, 4rem));
+  grid-template-columns: repeat(auto-fill, minmax(4rem, 6rem));
   grid-gap: 0.7rem;
 }
 
 .tag {
-  font-size: ;
   padding: 0.1rem 0;
   background: var(--clr-primary-9);
   border-radius: 0.25rem;
+  color: var(--clr-primary-6);
+}
+
+.tag-back {
+  padding: 0.1rem 0;
+  background: var(--clr-primary-3);
+  color: var(--clr-primary-1);
+  border-radius: 0.25rem;
+  transition: var(--transition);
+}
+
+.tag-back:hover {
+  background: var(--clr-primary-2);
 }
 
 /* bloglist */

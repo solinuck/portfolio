@@ -169,9 +169,23 @@
           </div>
         </div>
         <!-- end of front of the card -->
+
+        <!-- back of the card -->
         <div class="card-side card-back">
-            <a href="{{ url_for('blog.single_article_view', id=posts[i]['id'], title=posts[i]['title']) }}" class="btn">read more</a>
+            <div class="article-beginning">
+              <div class="fade-out"></div>
+              <p>{{posts[i]['body'][:800]}}</p>
+              <a href="{{ url_for('blog.single_article_view', id=posts[i]['id'], title=posts[i]['title']) }}" class="btn read-more">read more</a>
+            </div>
+            <div class="tags">
+              {% for tag in tags[loop.index - 1] %}
+                <a class="tag-back" href="#">
+                  {{tag}}
+                </a>
+              {% endfor %}
+            </div>
         </div>
+        <!-- end of back of the card -->
       </div>
       <!-- end of single article -->
     {% endfor %}
