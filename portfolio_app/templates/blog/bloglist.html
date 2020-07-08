@@ -4,12 +4,21 @@
 
 {% block content %}
 <!-- blog -->
-<div class="section section blog">
+<div class="section section-blog">
   <!-- section title -->
-  <div class="section-title">
-    <h2>blog</h2>
-    <div class="underline"></div>
+  <div class="bloglist-header">
+    <div class="blog-title">
+      <h2>blog</h2>
+      <div class="underline"></div>
+    </div>
+    <div class="search-container">
+      <form method="post" action="">
+        <input class="search" type="text" name="search" placeholder="Search article...">
+        <input class="hidden-btn" type="submit" id="search-btn">
+      </form>
+    </div>
   </div>
+
   <!-- end of section title -->
   <div class="section-center blog-center">
     {% for post in posts %}
@@ -40,7 +49,7 @@
             <div class="article-beginning">
               <div class="fade-out"></div>
               <p>{{post['body'][:800]}}</p>
-              <a href="{{ url_for('blog.single_article_view', id=post['id'], title=post['title']) }}" class="btn read-more">read more</a>
+              <a href="{{ url_for('blog.single_article_view', id=post['id'], title=post['title']| lower | replace(" ", "-")) }}" class="btn read-more">read more</a>
             </div>
             <div class="tags">
               {% for tag in tags[loop.index - 1] %}

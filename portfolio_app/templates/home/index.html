@@ -63,7 +63,7 @@
         distinctio magni fugiat
         adipisci dolore consequatur placeat, quaerat molestiae. Libero delectus
         aspernatur earum.</p>
-      <a href="./about.html" class="btn">more info</a>
+      <a href="/about" class="btn">more info</a>
     </article>
   </div>
 </section>
@@ -175,7 +175,7 @@
             <div class="article-beginning">
               <div class="fade-out"></div>
               <p>{{posts[i]['body'][:800]}}</p>
-              <a href="{{ url_for('blog.single_article_view', id=posts[i]['id'], title=posts[i]['title']) }}" class="btn read-more">read more</a>
+              <a href="{{ url_for('blog.single_article_view', id=posts[i]['id'], title=posts[i]['title']| lower | replace(" ", "-")) }}" class="btn read-more">read more</a>
             </div>
             <div class="tags">
               {% for tag in tags[loop.index - 1] %}

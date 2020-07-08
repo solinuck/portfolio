@@ -18,16 +18,40 @@ from .db import get_db
 bp = Blueprint("blog", __name__, url_prefix="/blog")
 
 
-@bp.route("/")
+@bp.route("/", methods=("GET", "POST"))
 def bloglist_view():
     db = get_db()
+
     posts = db.execute(
         "SELECT p.id, title, imagename, intro, body, tags, created, author_id, username"
         " FROM post p JOIN user u ON p.author_id = u.id"
         " ORDER BY created DESC"
     ).fetchall()
-    tags = [eval(post["tags"]) for post in posts]
-    return render_template("blog/bloglist.html", posts=posts, tags=tags)
+
+    all_tags = [eval(post["tags"]) for post in posts]
+
+    if request.method == "POST":
+        # Search
+        # posts = [dict(post) for post in posts]
+        print(posts)
+        search_input = request.form["search"]
+        search_words = search_input.lower().replace("-", " ").split()
+        ids = []
+        for post in posts:
+            title = post["title"]
+            id = post["id"]
+            tags = eval(post["tags"])
+            title_words = title.lower().replace("-", " ").split()
+            all_words = title_words + tags
+            for search_word in search_words:
+                if search_word in all_words:
+                    if id not in ids:
+                        ids.append(id)
+        posts = [post for post in posts if post["id"] in ids]
+
+    return render_template(
+        "blog/bloglist.html", posts=posts, tags=all_tags
+    )
 
 
 @bp.route("/create", methods=("GET", "POST"))
@@ -108,7 +132,7 @@ def get_post(id, check_author=True):
     return post
 
 
-@bp.route("/<title>_<int:id>/")
+@bp.route("/<title>-<int:id>/")
 def single_article_view(id, title):
     post = get_post(id, False)
     tags = eval(post["tags"])
