@@ -157,7 +157,7 @@
             <h4>{{posts[i]['title']}}</h4>
             <p>{{posts[i]['intro']}}</p>
             <div class="tags">
-              {% for tag in tags[loop.index - 1] %}
+              {% for tag in posts[i]["tags"] %}
                 <span class="tag">{{tag}}</span>
               {% endfor %}
             </div>
@@ -178,7 +178,7 @@
               <a href="{{ url_for('blog.single_article_view', id=posts[i]['id'], title=posts[i]['title']| lower | replace(" ", "-")) }}" class="btn read-more">read more</a>
             </div>
             <div class="tags">
-              {% for tag in tags[loop.index - 1] %}
+              {% for tag in posts[i]["tags"] %}
                 <a class="tag-back" href="#">
                   {{tag}}
                 </a>

@@ -14,10 +14,12 @@ def home_view():
         " FROM post p JOIN user u ON p.author_id = u.id"
         " ORDER BY created DESC"
     ).fetchall()
-    tags = [eval(post["tags"]) for post in posts]
+    posts = [dict(post) for post in posts]
+    for post in posts:
+        post["tags"] = eval(post["tags"])
     n_article = len(posts) if len(posts) < 5 else 5
     return render_template(
-        "/home/index.html", posts=posts, n_article=n_article, tags=tags
+        "/home/index.html", posts=posts, n_article=n_article
     )
 
 

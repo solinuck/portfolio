@@ -1,4 +1,6 @@
 import os
+
+import re
 from flask import (
     Blueprint,
     render_template,
@@ -28,31 +30,41 @@ def bloglist_view():
         " ORDER BY created DESC"
     ).fetchall()
 
-    all_tags = [eval(post["tags"]) for post in posts]
+    posts = [dict(post) for post in posts]
+    for post in posts:
+        post["tags"] = eval(post["tags"])
     search_value = None
 
     if request.method == "POST":
         # Search
         search_value = request.form["search"]
         if search_value.replace(" ", "") != "":
-            search_words = search_value.lower().replace("-", " ").split()
-            for post in posts:
-                title = post["title"]
-                tags = [tag.lower() for tag in eval(post["tags"])]
-                title_words = title.lower().replace("-", " ").split()
-                all_words = title_words + tags
-                for search_word in search_words:
-                    if search_word not in all_words:
-                        posts.remove(post)
-        else:
-            search_value = None
+            posts = search(posts, search_value)
 
     return render_template(
-        "blog/bloglist.html",
-        posts=posts,
-        tags=all_tags,
-        search_value=search_value,
+        "blog/bloglist.html", posts=posts, search_value=search_value
     )
+
+
+def search(posts, search_value):
+    search_words = re.sub("[^A-Za-z0-9 ]+", "", search_value.lower())
+    search_words = search_words.split()
+    ids = []
+    for post in posts:
+        title = post["title"]
+        tags = [
+            tag_word
+            for tag in post["tags"]
+            for tag_word in tag.lower().split()
+        ]
+        title_words = title.lower().replace("-", " ").split()
+        all_words = title_words + tags
+
+        for search_word in search_words:
+            if search_word in all_words:
+                ids.append(post["id"])
+
+    return [post for post in posts if post["id"] in ids]
 
 
 @bp.route("/create", methods=("GET", "POST"))
@@ -112,7 +124,7 @@ def create_view():
     return render_template("blog/create_article.html")
 
 
-def get_post(id, check_author=True):
+def get_post(id, check_author=True, check_other=False):
     post = (
         get_db()
         .execute(
@@ -125,19 +137,33 @@ def get_post(id, check_author=True):
     )
 
     if post is None:
-        abort(404, "Post id {0} doesn't exist.".format(id))
+        if not check_other:
+            abort(404, "Article id {0} doesn't exist.".format(id))
+    else:
+        post = dict(post)
+        post["tags"] = eval(post["tags"])
 
     if check_author and post["author_id"] != g.user["id"]:
-        abort(403)
+        if not check_other:
+            abort(403)
 
     return post
 
 
 @bp.route("/<title>-<int:id>/")
 def single_article_view(id, title):
-    post = get_post(id, False)
-    tags = eval(post["tags"])
-    return render_template("blog/article.html", post=post, tags=tags)
+    curr_post = get_post(id, False)
+
+    # try:
+    prev_post = get_post(id - 1, check_author=False, check_other=True)
+    next_post = get_post(id + 1, check_author=False, check_other=True)
+    print(next_post)
+    return render_template(
+        "blog/article.html",
+        post=curr_post,
+        prev_post=prev_post,
+        next_post=next_post,
+    )
 
 
 @bp.route("/<int:id>/update", methods=("GET", "POST"))

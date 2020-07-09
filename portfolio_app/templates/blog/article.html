@@ -14,18 +14,31 @@
       <p class="article-body">{{ post['body'] }}</p>
 
       <div class="tags">
-        {% for tag in tags %}
+        {% for tag in post["tags"] %}
           <a href="#" class="tag">{{tag}}</a>
         {% endfor %}
       </div>
     </article>
-    <form action="{{ url_for('blog.delete_view', id=post['id']) }}">
+    <!-- <form action="{{ url_for('blog.delete_view', id=post['id']) }}">
     <div class="center ">
       <button class="btn btn-center" type="submit" formaction="{{ url_for('blog.update_view', id=post['id']) }}"> Edit </button>
       <button class="btn danger btn-center" type="submit" onclick="return confirm('Are you sure?');"> Delete </button>
     </div>
-    </form>
+    </form> -->
+    <div class="article-footer">
+      {% if prev_post %}
+        <div class="article-footer-card">
+          <a href="">hello</a>
+        </div>
+      {% endif %}
+      {% if next_post %}
+        <div class="article-footer-card">
+          <a href="">hello</a>
+        </div>
+      {% endif %}
 
+    </div>
   </div>
+
 
 {% endblock %}

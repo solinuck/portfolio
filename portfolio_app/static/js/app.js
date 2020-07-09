@@ -69,7 +69,7 @@ if (addTagBtn) {
   });
 
   // show image name for image input in create_article
-  const input = document.querySelector('.image-input');
+  const input = document.querySelector('.hidden-btn');
   const selectedImage = document.querySelector('.selected-image');
 
   input.addEventListener('change', function(e) {

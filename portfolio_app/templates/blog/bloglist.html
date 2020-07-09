@@ -38,7 +38,7 @@
               <h4>{{post['title']}}</h4>
               <p>{{post['intro']}}</p>
               <div class="tags">
-                {% for tag in tags[loop.index - 1] %}
+                {% for tag in post["tags"] %}
                   <span class="tag">{{tag}}</span>
                 {% endfor %}
               </div>
@@ -59,7 +59,7 @@
                 <a href="{{ url_for('blog.single_article_view', id=post['id'], title=post['title']| lower | replace(" ", "-")) }}" class="btn read-more">read more</a>
               </div>
               <div class="tags">
-                {% for tag in tags[loop.index - 1] %}
+                {% for tag in post["tags"] %}
                   <a class="tag-back" href="#">
                     {{tag}}
                   </a>
