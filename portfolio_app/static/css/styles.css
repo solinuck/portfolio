@@ -951,10 +951,7 @@ Bloglist
   position: relative;
   max-width: 1170px;
   margin: 0 auto 1rem auto;
-}
-
-.blog-title {
-  text-align: center;
+  width: 90vw;
 }
 
 .search-container {
@@ -963,16 +960,24 @@ Bloglist
 }
 
 .search {
-  width: 200px;
+  width: 170px;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 650px) {
   .search {
     position: absolute;
     top: 50%;
     right: 0;
     transform: translate(-10%, -50%);
   }
+}
+
+.current-search {
+  color: var(--clr-grey-7);
+}
+
+.search-display {
+  color: var(--clr-primary-1);
 }
 
 .btn-center {

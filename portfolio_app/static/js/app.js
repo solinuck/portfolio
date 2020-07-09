@@ -81,8 +81,9 @@ if (addTagBtn) {
 
 // submit search on pressing enter
 const searchInput = document.querySelector(".search");
+// const currentSearch = document.querySelector(".current-search")
 if (searchInput) {
-  searchInput.addEventListener("keyup", function(e) {
+  searchInput.addEventListener("keydown", function(e) {
     if (e.keyCode === 13) {
       e.preventDefault();
       document.getElementById("search-btn").click();

@@ -174,7 +174,7 @@
         <div class="card-side card-back">
             <div class="article-beginning">
               <div class="fade-out"></div>
-              <p>{{posts[i]['body'][:800]}}</p>
+              <p>{{posts[i]['body'][:1000]}}</p>
               <a href="{{ url_for('blog.single_article_view', id=posts[i]['id'], title=posts[i]['title']| lower | replace(" ", "-")) }}" class="btn read-more">read more</a>
             </div>
             <div class="tags">

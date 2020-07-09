@@ -29,28 +29,29 @@ def bloglist_view():
     ).fetchall()
 
     all_tags = [eval(post["tags"]) for post in posts]
+    search_value = None
 
     if request.method == "POST":
         # Search
-        # posts = [dict(post) for post in posts]
-        print(posts)
-        search_input = request.form["search"]
-        search_words = search_input.lower().replace("-", " ").split()
-        ids = []
-        for post in posts:
-            title = post["title"]
-            id = post["id"]
-            tags = eval(post["tags"])
-            title_words = title.lower().replace("-", " ").split()
-            all_words = title_words + tags
-            for search_word in search_words:
-                if search_word in all_words:
-                    if id not in ids:
-                        ids.append(id)
-        posts = [post for post in posts if post["id"] in ids]
+        search_value = request.form["search"]
+        if search_value.replace(" ", "") != "":
+            search_words = search_value.lower().replace("-", " ").split()
+            for post in posts:
+                title = post["title"]
+                tags = [tag.lower() for tag in eval(post["tags"])]
+                title_words = title.lower().replace("-", " ").split()
+                all_words = title_words + tags
+                for search_word in search_words:
+                    if search_word not in all_words:
+                        posts.remove(post)
+        else:
+            search_value = None
 
     return render_template(
-        "blog/bloglist.html", posts=posts, tags=all_tags
+        "blog/bloglist.html",
+        posts=posts,
+        tags=all_tags,
+        search_value=search_value,
     )
 
 
