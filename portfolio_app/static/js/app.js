@@ -49,14 +49,14 @@ if (addTagBtn) {
   const articleTags = document.querySelector(".article-tags");
   const tagText = document.querySelector(".tag-text");
   addTagBtn.addEventListener("click", function() {
-    if (articleTags.childNodes.length < 5) {
-      let input = document.createElement('input');
-      input.type = "text";
-      input.name = `tag-${articleTags.childNodes.length}`;
-      input.classList.add("tag");
-      articleTags.appendChild(input);
-      tagText.classList.remove("show");
-    }
+    // if (articleTags.childNodes.length < 5) {
+    let input = document.createElement('input');
+    input.type = "text";
+    input.name = `tag-${articleTags.childNodes.length}`;
+    input.classList.add("create-tag");
+    articleTags.appendChild(input);
+    tagText.classList.remove("show");
+    // }
   });
 
   deleteTagBtn.addEventListener("click", function() {

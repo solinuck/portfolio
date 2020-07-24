@@ -47,9 +47,9 @@
           <div class="tag-field">
             <span class="tag-text">Add at least one Tag</span>
             <div class="article-tags">
-              {% for tag in tags %}
+              {%- for tag in post["tags"] -%}
               <input class="create-tag" name="tag-0" id="tag" value="{{ request.form['tags'] or tag }}">
-              {% endfor %}
+              {%- endfor -%}
             </div>
           </div>
         </div>

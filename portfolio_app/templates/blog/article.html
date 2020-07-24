@@ -18,22 +18,51 @@
           <a href="#" class="tag">{{tag}}</a>
         {% endfor %}
       </div>
+
     </article>
-    <!-- <form action="{{ url_for('blog.delete_view', id=post['id']) }}">
+    <form action="{{ url_for('blog.delete_view', id=post['id']) }}">
     <div class="center ">
       <button class="btn btn-center" type="submit" formaction="{{ url_for('blog.update_view', id=post['id']) }}"> Edit </button>
       <button class="btn danger btn-center" type="submit" onclick="return confirm('Are you sure?');"> Delete </button>
     </div>
-    </form> -->
+    </form>
     <div class="article-footer">
       {% if prev_post %}
         <div class="article-footer-card">
-          <a href="">hello</a>
+          <div class="article-footer-img">
+            <a href="{{ url_for('blog.single_article_view', id=prev_post['id'], title=prev_post['title']| lower | replace(" ", "-")) }}">
+              <img class="article-footer-photo" src="{{ config['IMAGE_UPLOADS_REL'] }}/{{ prev_post['imagename'] }}" alt="">
+            </a>
+          </div>
+          <div class="article-footer-info">
+            <a href="{{ url_for('blog.single_article_view', id=prev_post['id'], title=prev_post['title']| lower | replace(" ", "-")) }}">
+              <h4>{{prev_post["title"]}}</h4>
+            </a>
+            <div class="tags">
+              {% for tag in prev_post["tags"] %}
+                <a href="#" class="tag">{{tag}}</a>
+              {% endfor %}
+            </div>
+          </div>
         </div>
       {% endif %}
       {% if next_post %}
         <div class="article-footer-card">
-          <a href="">hello</a>
+          <div class="article-footer-img">
+            <a href="{{ url_for('blog.single_article_view', id=next_post['id'], title=next_post['title']| lower | replace(" ", "-")) }}">
+              <img class="article-footer-photo" src="{{ config['IMAGE_UPLOADS_REL'] }}/{{ next_post['imagename'] }}" alt="">
+            </a>
+          </div>
+          <div class="article-footer-info">
+            <a href="{{ url_for('blog.single_article_view', id=next_post['id'], title=next_post['title']| lower | replace(" ", "-")) }}">
+              <h4>{{next_post["title"]}}</h4>
+            </a>
+            <div class="tags">
+              {% for tag in next_post["tags"] %}
+                <a href="#" class="tag">{{tag}}</a>
+              {% endfor %}
+            </div>
+          </div>
         </div>
       {% endif %}
 

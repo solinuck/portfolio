@@ -33,6 +33,7 @@ def bloglist_view():
     posts = [dict(post) for post in posts]
     for post in posts:
         post["tags"] = eval(post["tags"])
+        print(post["tags"])
     search_value = None
 
     if request.method == "POST":
@@ -170,7 +171,6 @@ def single_article_view(id, title):
 @login_required
 def update_view(id):
     post = get_post(id)
-    tags = eval(post["tags"])
 
     if request.method == "POST":
         title = request.form["title"]
@@ -221,7 +221,7 @@ def update_view(id):
             db.commit()
             return redirect(url_for("blog.bloglist_view"))
 
-    return render_template("blog/update.html", post=post, tags=tags)
+    return render_template("blog/update.html", post=post)
 
 
 @bp.route("<int:id>/delete")
