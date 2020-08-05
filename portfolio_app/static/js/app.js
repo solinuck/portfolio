@@ -5,6 +5,7 @@ const sidebar = document.querySelector("#sidebar");
 const date = document.querySelector("#date");
 const txta = document.getElementsByTagName('textarea');
 const addTagBtn = document.querySelector("#add-btn");
+const blogArticle = document.querySelector(".blog-article");
 
 
 // add fixed class to navbar
@@ -89,4 +90,13 @@ if (searchInput) {
       document.getElementById("search-btn").click();
     }
   });
+}
+
+if (blogArticle) {
+  const footer = document.querySelector(".article-footer");
+  if (footer.childNodes.length === 1) {
+    footer.classList.remove("article-footer");
+    footer.classList.add("article-footer-only-one");
+
+  }
 }

@@ -1,6 +1,7 @@
 import os
 
 import re
+import math
 from flask import (
     Blueprint,
     render_template,
@@ -33,9 +34,15 @@ def bloglist_view():
     posts = [dict(post) for post in posts]
     for post in posts:
         post["tags"] = eval(post["tags"])
-        print(post["tags"])
-    search_value = None
+        post["body"] = eval(post["body"])
 
+    n_words = (
+        post["intro"].count(" ") + post["body"].count(" ") + 4
+    )  # 2 additional words at beggining and end.
+
+    reading_min = int(math.ceil(n_words / 225))  # average wpm 225
+
+    search_value = None
     if request.method == "POST":
         # Search
         search_value = request.form["search"]
@@ -43,7 +50,10 @@ def bloglist_view():
             posts = search(posts, search_value)
 
     return render_template(
-        "blog/bloglist.html", posts=posts, search_value=search_value
+        "blog/bloglist.html",
+        posts=posts,
+        search_value=search_value,
+        reading_min=reading_min,
     )
 
 
@@ -113,11 +123,20 @@ def create_view():
             flash(error)
             redirect(request.url)
         else:
+            html_body = str(body.replace("\r", "").split("\n"))
+
             db = get_db()
             db.execute(
                 "INSERT INTO post (title, imagename, intro, body, tags, author_id)"
                 " VALUES (?, ?, ?, ?, ?, ?)",
-                (title, imagename, intro, body, repr(tags), g.user["id"]),
+                (
+                    title,
+                    imagename,
+                    intro,
+                    html_body,
+                    repr(tags),
+                    g.user["id"],
+                ),
             )
             db.commit()
             return redirect(url_for("blog.bloglist_view"))
@@ -143,6 +162,7 @@ def get_post(id, check_author=True, check_other=False):
     else:
         post = dict(post)
         post["tags"] = eval(post["tags"])
+        post["body"] = eval(post["body"])
 
     if check_author and post["author_id"] != g.user["id"]:
         if not check_other:

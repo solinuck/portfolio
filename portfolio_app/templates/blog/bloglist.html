@@ -35,7 +35,7 @@
             <!-- front of the card -->
             <div class="blog-card-img">
               <img src="{{ config['IMAGE_UPLOADS_REL'] }}/{{ post['imagename'] }}" alt="">
-              <div class="reading-time"> 7 min read</div>
+              <div class="reading-time"> {{reading_min}} min read</div>
             </div>
             <div class="card-info">
               <h4>{{post['title']}}</h4>
@@ -56,7 +56,12 @@
           <div class="card-side card-back">
               <div class="article-beginning">
                 <div class="fade-out"></div>
-                <p>{{post['body'][:1000]}}</p>
+                {%- for p in post["body"] -%}
+                  {% if p == "" %}
+                    <br>
+                  {% endif %}
+                  <p>{{ p }}</p>
+                {%- endfor -%}
                 <a href="{{ url_for('blog.single_article_view', id=post['id'], title=post['title']| lower | replace(" ", "-")) }}" class="btn read-more">read more</a>
               </div>
               <div class="tags">
@@ -76,6 +81,11 @@
   {% if g.user %}
     <div class="btn-center">
       <a class="action btn" href="{{ url_for('blog.create_view') }}"> new article</a>
+    </div>
+  {% endif %}
+  {% if search_value%}
+    <div class="btn-center">
+      <a class="action btn" href="{{ url_for('blog.bloglist_view') }}"> All articles</a>
     </div>
   {% endif %}
 </div>

@@ -404,7 +404,7 @@ Hero
 }
 
 .hero-info {
-  min-height: 40vh;
+  min-height: 28vh;
   padding: 1rem;
   background: var(--clr-white);
   -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0% 75%);
@@ -650,6 +650,12 @@ Blog
   background: var(--clr-white);
 }
 
+.blog-center {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 3rem 1rem;
+}
+
 .card {
   height: 27rem;
   position: relative;
@@ -669,6 +675,11 @@ Blog
 
 .card-front {
   background: var(--clr-grey-10);
+}
+
+.blog-card-link {
+  cursor: default;
+  color: var(--clr-grey-1);
 }
 
 .card-back {
@@ -750,19 +761,11 @@ Blog
   height: 2rem;
   object-fit: cover;
   border-radius: 50%;
-}
-
+} */
 .card-footer p {
   margin-bottom: 0;
-  text-transform: uppercase;
-  justify-self: end;
   color: var(--clr-primary-5);
   font-size: 0.85rem;
-} */
-.blog-center {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 3rem 1rem;
 }
 
 /*
@@ -922,7 +925,7 @@ Tags
 
 .tags {
   text-align: center;
-  margin: 0.4rem 0;
+  margin-top: 0.5rem;
   display: flex;
   flex-wrap: wrap;
 }
@@ -932,6 +935,7 @@ Tags
   background: var(--clr-primary-9);
   border-radius: 0.25rem;
   margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
   color: var(--clr-primary-6);
   text-transform: capitalize;
 }
@@ -995,7 +999,7 @@ Bloglist
 .btn-center {
   text-align: center;
   margin: 2rem auto 0 auto;
-  width: 120px;
+  /* width: 120px; */
   color: var(--clr-white);
 }
 
@@ -1046,6 +1050,15 @@ Single Blog Article
   text-align: justify;
 }
 
+.article-footer-heading {
+  margin-top: 2rem;
+  color: var(--clr-grey-7);
+  text-transform: capitalize;
+  width: 90vw;
+  margin: 0 auto;
+  max-width: 680px;
+}
+
 .article-footer {
   display: grid;
   max-width: 1170px;
@@ -1054,31 +1067,46 @@ Single Blog Article
   grid-gap: 1rem 2rem;
 }
 
+/* See app.js: styling if there is only one article */
+.article-footer-only-one {
+  max-width: 680px;
+  margin: 2rem auto;
+}
+
 .article-footer-card {
-  height: 5rem;
-  border: 1px solid var(--clr-grey-8);
   display: grid;
   grid-template-columns: 30% 1fr;
+  -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
 }
 
 .article-footer-photo {
   height: 100%;
-  width: 100%;
   object-fit: cover;
+  /* height: 5rem; */
 }
 
 .article-footer-img {
-  height: calc(5rem - 2px);
+  max-height: 6.3rem;
+  height: 100%;
   width: 100%;
 }
 
 .article-footer-info {
+  display: grid;
+  grid-template-rows: 1fr auto;
   margin: 0.25rem 2rem;
+  align-items: center;
 }
 
 .article-footer-info h4 {
-  text-align: center;
-  color: var(--clr-primary-1)
+  color: var(--clr-primary-1);
+  margin: 0;
+}
+
+.go-back-btn {
+  width: 200px;
 }
 
 /* +++++++++++ About page +++++++++++ */
@@ -1087,6 +1115,25 @@ Single Blog Article
 Timeline
 ===============
 */
+.about-hero {
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), url("../images/about-hero-large.jpg") center/cover no-repeat fixed;
+  height: 85vh;
+  text-align: justify;
+}
+
+.about-hero-info p {
+  color: var(--clr-white);
+  max-width: 800px;
+}
+
+.about-hero-center {}
+
+@media screen and (min-width: 1100px) {
+  .about-hero {
+    background-position: left;
+  }
+}
+
 .timeline-center {
   width: 80vw;
   max-width: 40rem;
