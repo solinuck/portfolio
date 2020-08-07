@@ -21,8 +21,9 @@ from .db import get_db
 bp = Blueprint("blog", __name__, url_prefix="/blog")
 
 
-@bp.route("/", methods=("GET", "POST"))
-def bloglist_view():
+@bp.route("/", defaults={"search": None}, methods=("GET", "POST"))
+@bp.route("/<search>", methods=("GET", "POST"))
+def bloglist_view(search):
     db = get_db()
 
     posts = db.execute(
@@ -42,23 +43,24 @@ def bloglist_view():
 
     reading_min = int(math.ceil(n_words / 225))  # average wpm 225
 
-    search_value = None
-    if request.method == "POST":
-        # Search
-        search_value = request.form["search"]
-        if search_value.replace(" ", "") != "":
-            posts = search(posts, search_value)
+    print(search)
+
+    if search is not None:
+        if request.method == "POST":
+            search = request.form["search"]
+        if search.replace(" ", "") != "":
+            posts = search_func(posts, search)
 
     return render_template(
         "blog/bloglist.html",
         posts=posts,
-        search_value=search_value,
+        search=search,
         reading_min=reading_min,
     )
 
 
-def search(posts, search_value):
-    search_words = re.sub("[^A-Za-z0-9 ]+", "", search_value.lower())
+def search_func(posts, search):
+    search_words = re.sub("[^A-Za-z0-9 ]+", "", search.lower())
     search_words = search_words.split()
     ids = []
     for post in posts:
@@ -251,7 +253,7 @@ def delete_view(id):
     db = get_db()
     db.execute("DELETE FROM post WHERE id = ?", (id,))
     db.commit()
-    return redirect(url_for("blog.bloglist_view"))
+    return redirect(url_for("blog.bloglist_view", search="hello"))
 
 
 def allowed_image(filename):

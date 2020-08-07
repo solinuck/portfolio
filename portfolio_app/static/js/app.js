@@ -1,4 +1,3 @@
-const navbar = document.querySelector("#nav");
 const navBtn = document.querySelector("#nav-btn");
 const closeBtn = document.querySelector("#close-btn");
 const sidebar = document.querySelector("#sidebar");
@@ -8,14 +7,6 @@ const addTagBtn = document.querySelector("#add-btn");
 const blogArticle = document.querySelector(".blog-article");
 
 
-// add fixed class to navbar
-window.addEventListener("scroll", function() {
-  if (window.pageYOffset > 80) {
-    navbar.classList.add("navbar-fixed");
-  } else {
-    navbar.classList.remove("navbar-fixed");
-  }
-});
 // show sidebar
 navBtn.addEventListener("click", function() {
   sidebar.classList.add("show-sidebar");
@@ -82,11 +73,12 @@ if (addTagBtn) {
 
 // submit search on pressing enter
 const searchInput = document.querySelector(".search");
-// const currentSearch = document.querySelector(".current-search")
+const searchForm = document.getElementById("search-form");
 if (searchInput) {
   searchInput.addEventListener("keydown", function(e) {
     if (e.keyCode === 13) {
       e.preventDefault();
+      searchForm.action = `/blog/${searchInput.value}`;
       document.getElementById("search-btn").click();
     }
   });

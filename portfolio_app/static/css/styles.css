@@ -346,7 +346,8 @@ Sidebar
 
 .social-icons {
   display: grid;
-  margin-top: 3rem;
+  margin-top: 1rem;
+  /* background: var(--clr-grey-8); */
   width: 20rem;
   grid-template-columns: repeat(4, 1fr);
   justify-items: center;
@@ -398,13 +399,13 @@ Hero
 }
 
 .hero-center {
-  height: calc(100vh - 5rem);
+  height: 100vh;
   display: grid;
   place-items: center;
 }
 
 .hero-info {
-  min-height: 28vh;
+  min-height: 25vh;
   padding: 1rem;
   background: var(--clr-white);
   -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0% 75%);
@@ -1117,16 +1118,22 @@ Timeline
 */
 .about-hero {
   background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), url("../images/about-hero-large.jpg") center/cover no-repeat fixed;
-  height: 85vh;
+  height: 100vh;
   text-align: justify;
+}
+
+.about-page-title {
+  color: var(--clr-grey-8);
+}
+
+.about-hero-info {
+  max-width: 800px;
+  margin-top: 6rem;
 }
 
 .about-hero-info p {
   color: var(--clr-white);
-  max-width: 800px;
 }
-
-.about-hero-center {}
 
 @media screen and (min-width: 1100px) {
   .about-hero {

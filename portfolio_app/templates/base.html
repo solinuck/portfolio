@@ -16,7 +16,7 @@
 
 <body>
   <!-- navbar -->
-  <nav class="nav" id="nav">
+  <nav class="nav navbar-fixed" id="nav">
     <div class="nav-center">
       <!-- nav header -->
       <div class="nav-header">
@@ -39,7 +39,7 @@
           <a href="/projects">projects</a>
         </li>
         <li>
-          <a href="/blog">blog</a>
+          <a href="{{ url_for('blog.bloglist_view') }}">blog</a>
         </li>
       </ul>
     </div>
@@ -65,7 +65,7 @@
           <a href="/projects">projects</a>
         </li>
         <li>
-          <a href="/blog">blog</a>
+          <a href="{{ url_for('blog.bloglist_view') }}">blog</a>
         </li>
       </ul>
       <!-- social icons -->
