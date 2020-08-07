@@ -43,8 +43,6 @@ def bloglist_view(search):
 
     reading_min = int(math.ceil(n_words / 225))  # average wpm 225
 
-    print(search)
-
     if search is not None:
         if request.method == "POST":
             search = request.form["search"]
@@ -88,7 +86,7 @@ def create_view():
         body = request.form["body"]
         intro = request.form["intro"]
         image = request.files["image"]
-        imagename = "project-3.jpeg"
+        imagename = None
         tags = [
             request.form[f"tag-{n}"]
             for n in range(5)
@@ -106,6 +104,19 @@ def create_view():
 
             if allowed_image(image.filename):
                 imagename = secure_filename(image.filename)
+                n = 0
+                while os.path.isfile(
+                    os.path.join(
+                        current_app.config["IMAGE_UPLOADS"], imagename
+                    )
+                ):
+                    len_suff = len(image.filename.split(".")[1]) + 1
+                    imagename = (
+                        imagename[:-len_suff]
+                        + f"{n}"
+                        + imagename[-len_suff:]
+                    )
+                    n += 1
 
                 image.save(
                     os.path.join(
@@ -249,11 +260,16 @@ def update_view(id):
 @bp.route("<int:id>/delete")
 @login_required
 def delete_view(id):
-    get_post(id)
+    post = get_post(id)
+    os.remove(
+        os.path.join(
+            current_app.config["IMAGE_UPLOADS"], post["imagename"]
+        )
+    )
     db = get_db()
     db.execute("DELETE FROM post WHERE id = ?", (id,))
     db.commit()
-    return redirect(url_for("blog.bloglist_view", search="hello"))
+    return redirect(url_for("blog.bloglist_view"))
 
 
 def allowed_image(filename):
