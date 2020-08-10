@@ -5,6 +5,7 @@ const date = document.querySelector("#date");
 const txta = document.getElementsByTagName('textarea');
 const addTagBtn = document.querySelector("#add-btn");
 const blogArticle = document.querySelector(".blog-article");
+const expandSearchBtn = document.querySelector(".expand-search-btn");
 
 
 // show sidebar
@@ -91,4 +92,48 @@ if (blogArticle) {
     footer.classList.add("article-footer-only-one");
 
   }
+}
+
+if (expandSearchBtn) {
+  const expandSearchArrow = document.querySelector(".fa-angle-down");
+  const searchContainer = document.querySelector(".expanded-blog-search");
+  const articlesSection = document.querySelector(".blog-articles");
+  expandSearchBtn.addEventListener("click", function() {
+    articlesSection.classList.toggle("blog-articles-small");
+    if (expandSearchArrow.classList.contains("rotate")) {
+      searchContainer.classList.remove("z-index");
+      setTimeout(function() {
+        expandSearchArrow.classList.toggle("rotate");
+        searchContainer.classList.toggle("show-blog-search");
+      }, 200);
+    } else {
+      expandSearchArrow.classList.toggle("rotate");
+      searchContainer.classList.toggle("show-blog-search");
+      setTimeout(function() {
+        searchContainer.classList.toggle("z-index");
+      }, 300);
+    }
+
+  });
+
+  const dropdownBtns = document.querySelectorAll("#dropdown-btn");
+  const yearOptions = document.querySelector(".year-option");
+  const monthOptions = document.querySelector(".month-option");
+
+  dropdownBtns.forEach((btn) => {
+    const dropdownContent = btn.nextElementSibling;
+    btn.addEventListener("click", () => {
+      dropdownContent.classList.toggle("show");
+    });
+
+    window.addEventListener("click", function(event) {
+      if (event.target != btn && event.target.parentElement != btn) {
+        if (dropdownContent.classList.contains("show")) {
+          dropdownContent.classList.remove("show");
+        }
+      }
+    });
+  });
+
+
 }

@@ -4,8 +4,7 @@
 
 {% block content %}
 <!-- blog -->
-<div class="section section-blog">
-  <!-- section title -->
+<section class="section bloglist-section">
   <div class="bloglist-header">
     <div class="center">
       <h2>blog</h2>
@@ -17,8 +16,87 @@
         <input class="hidden-btn" type="submit" id="search-btn">
       </form>
     </div>
+    <div class="expand-search-btn">
+      {% if expandsearch%}
+      <i class="fas fa-angle-down rotate"></i>
+      {% else %}
+      <i class="fas fa-angle-down"></i>
+      {% endif%}
+    </div>
   </div>
-  <!-- end of section title -->
+</section>
+
+
+<!-- expanded search -->
+{% if expandsearch%}
+<section class="section expanded-blog-search show-blog-search z-index">
+{% else %}
+<section class="section expanded-blog-search">
+{% endif%}
+  <div class="section-center search-center">
+
+    <!-- sort by date -->
+    <div class="pick-date">
+      <h3 class="center">Sort by date</h3>
+      <ul class="list-dots search-date-list">
+        <li class="search-year">
+          <div class="date-option">
+            2020
+            <span class="option-menu">
+              <i class="fas fa-angle-down" id="dropdown-btn"></i>
+              <div class="year-option">
+                <a href="{{ url_for('blog.bloglist_view', search=search, year='20', month=month, expandsearch=True)}}">2020</a>
+                <a href="{{ url_for('blog.bloglist_view', search=search, year='21', month=month, expandsearch=True)}}">2021</a>
+              </div>
+            </span>
+          </div>
+
+          <ul class="list-dots">
+            <li class="search-month">
+              <div class="date-option">
+              August
+              <span class="option-menu">
+                <i class="fas fa-angle-down" id="dropdown-btn"></i>
+                <div class="month-option">
+                  {%- for x in months -%}
+                    <a href="{{ url_for('blog.bloglist_view', search=search, year=year, month=months[x], expandsearch=True) }}">{{x}}</a>
+                  {% endfor %}
+                </div>
+              </span>
+            </div>
+              <ul class="list-dots search-articles">
+                {% for post in posts %}
+                  {%  if post["created"][:2] == month and post["created"][6:8] == year%}
+                    <li class="search-article">
+                      <a href="{{ url_for('blog.single_article_view', id=post['id'], title=post['title']| lower | replace(" ", "-")) }}" class='search-link'>{{ post["title"] }}</a>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <!-- end of sort by date -->
+
+    <!-- sort by topic -->
+    <div class="pick-topic">
+      <h3 class="center">Pick a topic</h3>
+      {% for post in posts%}
+        {% for tag in post["tags"]%}
+          <a class="tag-link" href="{{ url_for('blog.bloglist_view', search=tag.lower(), year=year, month=month, expandsearch=expandsearch, _method='GET') }}">
+            {{tag}}
+          </a>
+        {% endfor %}
+      {% endfor %}
+    </div>
+    <!-- end of sort by topic -->
+  </div>
+</section>
+<!-- end of expanded search -->
+
+<section class="section blog-articles">
   <div class="section-center">
     <h3 class="current-search">
       {% if search %}
@@ -26,9 +104,9 @@
       {% else %}
         All articles
       {% endif %}
-      </h3>
+    </h3>
     <div class="blog-center">
-      {% for post in posts %}
+      {% for post in search_posts %}
         <!-- single article -->
         <div class="card">
           <div class="card-side card-front">
@@ -46,7 +124,7 @@
                     <span class="tag">{{tag}}</span>
                   {% endfor %}
                 </div>
-                <p>{{(post['created'] | string )[2:10] }}</p>
+                <p>{{(post['created'])[:10] }}</p>
               </div>
             </div>
           </div>
@@ -66,7 +144,7 @@
               </div>
               <div class="tags">
                 {% for tag in post["tags"] %}
-                  <a class="tag-back" href="{{ url_for('blog.bloglist_view', search=tag.lower(), _method='GET') }}">
+                  <a class="tag-link" href="{{ url_for('blog.bloglist_view', search=tag.lower(), _method='GET') }}">
                     {{tag}}
                   </a>
                 {% endfor %}
@@ -80,14 +158,14 @@
   </div>
   {% if g.user %}
     <div class="btn-center">
-      <a class="action btn" href="{{ url_for('blog.create_view') }}"> new article</a>
+      <a class="btn" href="{{ url_for('blog.create_view') }}"> new article</a>
     </div>
   {% endif %}
   {% if search%}
     <div class="btn-center">
-      <a class="action btn" href="{{ url_for('blog.bloglist_view') }}"> All articles</a>
+      <a class="btn" href="{{ url_for('blog.bloglist_view') }}"> All articles</a>
     </div>
   {% endif %}
-</div>
+</section>
 <!--end of  blog -->
 {% endblock %}

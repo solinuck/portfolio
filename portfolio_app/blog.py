@@ -2,6 +2,17 @@ import os
 
 import re
 import math
+from datetime import datetime
+
+today = datetime.today()
+if len(str(today.month)) == 1:
+    today_month = "0" + str(today.month)
+else:
+    today_month = str(today.month)
+
+
+today_year = str(today.year)[2:]
+print(today_year, today_month)
 from flask import (
     Blueprint,
     render_template,
@@ -21,9 +32,50 @@ from .db import get_db
 bp = Blueprint("blog", __name__, url_prefix="/blog")
 
 
-@bp.route("/", defaults={"search": None}, methods=("GET", "POST"))
-@bp.route("/<search>", methods=("GET", "POST"))
-def bloglist_view(search):
+@bp.route(
+    "/",
+    defaults={
+        "search": None,
+        "year": today_year,
+        "month": today_month,
+        "expandsearch": False,
+    },
+    methods=("GET", "POST"),
+)
+@bp.route(
+    "/<year>/<month>/expand<expandsearch>",
+    defaults={"search": None},
+    methods=("GET", "POST"),
+)
+@bp.route(
+    "/<year>/<month>/expand<expandsearch>/<search>",
+    methods=("GET", "POST"),
+)
+@bp.route(
+    "/<search>",
+    defaults={
+        "year": today_year,
+        "month": today_month,
+        "expandsearch": False,
+    },
+    methods=("GET", "POST"),
+)
+def bloglist_view(search, expandsearch, year, month):
+    months = {
+        "January": "01",
+        "February": "02",
+        "March": "03",
+        "April": "04",
+        "May": "05",
+        "June": "06",
+        "July": "07",
+        "August": "08",
+        "September": "09",
+        "Oktober": "10",
+        "November": "11",
+        "December": "12",
+    }
+
     db = get_db()
 
     posts = db.execute(
@@ -36,6 +88,8 @@ def bloglist_view(search):
     for post in posts:
         post["tags"] = eval(post["tags"])
         post["body"] = eval(post["body"])
+        post["created"] = post["created"].strftime("%m/%d/%Y, %H:%M:%S")
+        post["created"] = post["created"][:7] + post["created"][9:10]
 
     n_words = (
         post["intro"].count(" ") + post["body"].count(" ") + 4
@@ -47,13 +101,23 @@ def bloglist_view(search):
         if request.method == "POST":
             search = request.form["search"]
         if search.replace(" ", "") != "":
-            posts = search_func(posts, search)
+            search_posts = search_func(posts, search)
+    else:
+        search_posts = posts
+
+    print(year)
+    print(month)
 
     return render_template(
         "blog/bloglist.html",
         posts=posts,
+        search_posts=search_posts,
         search=search,
         reading_min=reading_min,
+        months=months,
+        year=year,
+        month=month,
+        expandsearch=expandsearch,
     )
 
 
