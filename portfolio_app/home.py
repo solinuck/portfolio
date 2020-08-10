@@ -19,6 +19,8 @@ def home_view():
     for post in posts:
         post["tags"] = eval(post["tags"])
         post["body"] = eval(post["body"])
+        post["created"] = post["created"].strftime("%m/%d/%Y, %H:%M:%S")
+        post["created"] = post["created"][:7] + post["created"][9:10]
     n_article = len(posts) if len(posts) < 5 else 5
 
     n_words = (

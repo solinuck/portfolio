@@ -404,13 +404,18 @@ Hero
   place-items: center;
 }
 
-.hero-info {
+.speech-bubble {
   min-height: 280px;
   height: 25vh;
-  padding: 1rem;
   background: var(--clr-white);
   -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0% 75%);
   clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0% 75%);
+}
+
+.hero-info {
+  padding: 1rem;
+  display: grid;
+  align-items: center;
 }
 
 .hero-info h4 {
@@ -770,6 +775,10 @@ Blog
   font-size: 0.85rem;
 }
 
+.view-all-btn {
+  margin-top: 2rem;
+}
+
 /*
 ===============
 Forms
@@ -1104,12 +1113,6 @@ Bloglist
   }
 }
 
-.btn-center {
-  text-align: center;
-  margin: 2rem auto 0 auto;
-  color: var(--clr-white);
-}
-
 .danger {
   background-color: var(--clr-red);
 }
@@ -1138,14 +1141,16 @@ Single Blog Article
 
 .single-article {
   max-width: 680px;
+  margin-bottom: 3rem;
 }
 
 .single-article .underline {
-  margin: 0 0 1rem 0;
+  margin-bottom: 1rem;
 }
 
 .article-title {
   font-size: 3.5rem;
+  text-align: center;
 }
 
 .article-body {
@@ -1155,8 +1160,11 @@ Single Blog Article
   text-align: justify;
 }
 
+.article-body p {
+  margin-bottom: 0;
+}
+
 .article-footer-heading {
-  margin-top: 2rem;
   color: var(--clr-grey-7);
   text-transform: capitalize;
   width: 90vw;
@@ -1164,7 +1172,7 @@ Single Blog Article
   max-width: 680px;
 }
 
-.article-footer {
+.other-articles {
   display: grid;
   max-width: 1170px;
   margin: 2rem auto;
@@ -1179,11 +1187,20 @@ Single Blog Article
 }
 
 .article-footer-card {
+  background: var(--clr-grey-10);
   display: grid;
   grid-template-columns: 30% 1fr;
   -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
   -moz-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
   box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
+  transition: var(--transition);
+}
+
+.article-footer-card:hover {
+  transform: translate(-0.2rem, 0.2rem);
+  -webkit-box-shadow: 6px -6px 5px 0px rgba(0, 0, 0, 0.54);
+  -moz-box-shadow: 6px -6px 5px 0px rgba(0, 0, 0, 0.54);
+  box-shadow: 6px -6px 5px 0px rgba(0, 0, 0, 0.54);
 }
 
 .article-footer-photo {
@@ -1221,7 +1238,7 @@ Timeline
 ===============
 */
 .about-hero {
-  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), url("../images/about-hero-large.jpg") center/cover no-repeat fixed;
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), url("../images/about/about-hero-large.jpg") center/cover no-repeat fixed;
   height: 100vh;
   text-align: justify;
 }

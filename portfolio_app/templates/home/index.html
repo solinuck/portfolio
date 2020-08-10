@@ -7,28 +7,31 @@
 <!-- header -->
 <header class="hero">
   <div class="section-center hero-center">
-    <article class="hero-info">
-      <div class="underline">
+    <article class="speech-bubble">
+      <div class="hero-info">
+        <div class="underline">
+        </div>
+        <h1>Hey I'm Erwin</h1>
+        <h4>freelance web developer</h4>
+        <ul class="social-icons hero-icons">
+          <li>
+            <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+          </li>
+          <li>
+            <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+          </li>
+          <li>
+            <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+          </li>
+          <li>
+            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+          </li>
+        </ul>
       </div>
-      <h1>Hey I'm Erwin</h1>
-      <h4>freelance web developer</h4>
-      <ul class="social-icons hero-icons">
-        <li>
-          <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
-        </li>
-        <li>
-          <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
-        </li>
-        <li>
-          <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
-        </li>
-        <li>
-          <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-        </li>
-      </ul>
+
     </article>
     <article class="hero-img">
-      <img src="{{ config.IMAGES_PATH }}/hero-img.jpeg" class="hero-photo" alt="john doe">
+      <img src="{{ config.IMAGES_PATH }}/home/hero-img.jpeg" class="hero-photo" alt="john doe">
     </article>
   </div>
 </header>
@@ -39,7 +42,7 @@
   <div class="section-center about-center">
     <!-- about img -->
     <article class="about-img">
-      <img src="{{ config.IMAGES_PATH }}/about-img.jpeg" class="hero-photo" alt="about img">
+      <img src="{{ config.IMAGES_PATH }}/home/about-img.jpeg" class="hero-photo" alt="about img">
     </article>
     <!-- about info -->
     <article class="about-info">
@@ -84,7 +87,7 @@
     <!-- single project -->
     <a href="./projects.html" class="project-1">
       <article class="project">
-        <img src="{{ config.IMAGES_PATH }}/project-1.jpeg" alt="single project"
+        <img src="{{ config.IMAGES_PATH }}/projects/a-star.png" alt="single project"
           class="project-img">
         <div class="project-info">
           <h4>project title</h4>
@@ -97,7 +100,7 @@
     <!-- single project -->
     <a href="./projects.html" class="project-2">
       <article class="project">
-        <img src="{{ config.IMAGES_PATH }}/project-2.jpeg" alt="single project"
+        <img src="{{ config.IMAGES_PATH }}/projects/project-2.jpeg" alt="single project"
           class="project-img">
         <div class="project-info">
           <h4>project title</h4>
@@ -110,7 +113,7 @@
     <!-- single project -->
     <a href="./projects.html" class="project-3">
       <article class="project">
-        <img src="{{ config.IMAGES_PATH }}/project-3.jpeg" alt="single project"
+        <img src="{{ config.IMAGES_PATH }}/projects/chess-engine.png" alt="single project"
           class="project-img">
         <div class="project-info">
           <h4>project title</h4>
@@ -123,7 +126,7 @@
     <!-- single project -->
     <a href="./projects.html" class="project-4">
       <article class="project">
-        <img src="{{ config.IMAGES_PATH }}/project-4.jpeg" alt="single project"
+        <img src="{{ config.IMAGES_PATH }}/projects/vispa-frontend.png" alt="single project"
           class="project-img">
         <div class="project-info">
           <h4>project title</h4>
@@ -137,7 +140,7 @@
 <!-- end of projects -->
 
 <!-- blog -->
-<div class="section section blog">
+<div class="section blog">
   <!-- section title -->
   <div class="section-title">
     <h2>blog</h2>
@@ -158,18 +161,13 @@
             <div class="card-info">
               <h4>{{posts[i]['title']}}</h4>
               <p>{{posts[i]['intro']}}</p>
-              <!-- <div class="tags">
-                {% for tag in posts[i]["tags"] %}
-                  <span class="tag">{{tag}}</span>
-                {% endfor %}
-              </div> -->
               <div class="card-footer">
                 <div class="tags">
                   {% for tag in posts[i]["tags"] %}
                     <span class="tag">{{tag}}</span>
                   {% endfor %}
                 </div>
-                <p>{{(posts[i]['created'] | string )[2:10] }}</p>
+                <p>{{(posts[i]['created'])[:10] }}</p>
               </div>
             </div>
           </a>
@@ -202,8 +200,8 @@
     {% endfor %}
 
   </div>
-  <div class="btn-center">
-    <a href="/blog" class="btn">view all</a>
+  <div class="center view-all-btn">
+    <a href="/blog" class="btn">view all articles</a>
   </div>
 </div>
 <!--end of  blog -->

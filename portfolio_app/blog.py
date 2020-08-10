@@ -12,7 +12,6 @@ else:
 
 
 today_year = str(today.year)[2:]
-print(today_year, today_month)
 from flask import (
     Blueprint,
     render_template,
@@ -104,9 +103,6 @@ def bloglist_view(search, expandsearch, year, month):
             search_posts = search_func(posts, search)
     else:
         search_posts = posts
-
-    print(year)
-    print(month)
 
     return render_template(
         "blog/bloglist.html",
@@ -255,7 +251,6 @@ def single_article_view(id, title):
     # try:
     prev_post = get_post(id - 1, check_author=False, check_other=True)
     next_post = get_post(id + 1, check_author=False, check_other=True)
-    print(next_post)
     return render_template(
         "blog/article.html",
         post=curr_post,

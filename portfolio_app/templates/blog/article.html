@@ -34,52 +34,56 @@
     </div>
     </form>
     {% endif %}
+
     <div class="article-footer">
-      {%- if prev_post and next_post -%}
+      {%- if prev_post or next_post -%}
         <h3 class="article-footer-heading">Other articles</h3>
       {% endif %}
-      {%- if prev_post -%}
-        <div class="article-footer-card">
-          <div class="article-footer-img">
-            <a href="{{ url_for('blog.single_article_view', id=prev_post['id'], title=prev_post['title']| lower | replace(" ", "-")) }}">
-              <img class="article-footer-photo" src="{{ config['IMAGE_UPLOADS_REL'] }}/{{ prev_post['imagename'] }}" alt="">
-            </a>
-          </div>
-          <div class="article-footer-info">
-            <a href="{{ url_for('blog.single_article_view', id=prev_post['id'], title=prev_post['title']| lower | replace(" ", "-")) }}">
-              <h4>{{prev_post["title"]}}</h4>
-            </a>
-            <div class="tags">
-              {% for tag in prev_post["tags"] %}
-                <a href="#" class="tag">{{tag}}</a>
-              {% endfor %}
+      <div class="other-articles">
+        {%- if prev_post -%}
+          <div class="article-footer-card">
+            <div class="article-footer-img">
+              <a href="{{ url_for('blog.single_article_view', id=prev_post['id'], title=prev_post['title']| lower | replace(" ", "-")) }}">
+                <img class="article-footer-photo" src="{{ config['IMAGE_UPLOADS_REL'] }}/{{ prev_post['imagename'] }}" alt="">
+              </a>
+            </div>
+            <div class="article-footer-info">
+              <a href="{{ url_for('blog.single_article_view', id=prev_post['id'], title=prev_post['title']| lower | replace(" ", "-")) }}">
+                <h4>{{prev_post["title"]}}</h4>
+              </a>
+              <div class="tags">
+                {% for tag in prev_post["tags"] %}
+                  <a href="{{ url_for('blog.bloglist_view', search=tag.lower(), _method='GET') }}" class="tag">{{tag}}</a>
+                {% endfor %}
+              </div>
             </div>
           </div>
-        </div>
-      {%- endif -%}
-      {%- if next_post -%}
-        <div class="article-footer-card">
-          <div class="article-footer-img">
-            <a href="{{ url_for('blog.single_article_view', id=next_post['id'], title=next_post['title']| lower | replace(" ", "-")) }}">
-              <img class="article-footer-photo" src="{{ config['IMAGE_UPLOADS_REL'] }}/{{ next_post['imagename'] }}" alt="">
-            </a>
-          </div>
-          <div class="article-footer-info">
-            <a href="{{ url_for('blog.single_article_view', id=next_post['id'], title=next_post['title']| lower | replace(" ", "-")) }}">
-              <h4>{{next_post["title"]}}</h4>
-            </a>
-            <div class="tags">
-              {% for tag in next_post["tags"] %}
-                <a href="#" class="tag">{{tag}}</a>
-              {% endfor %}
+        {%- endif -%}
+        {%- if next_post -%}
+          <div class="article-footer-card">
+            <div class="article-footer-img">
+              <a href="{{ url_for('blog.single_article_view', id=next_post['id'], title=next_post['title']| lower | replace(" ", "-")) }}">
+                <img class="article-footer-photo" src="{{ config['IMAGE_UPLOADS_REL'] }}/{{ next_post['imagename'] }}" alt="">
+              </a>
+            </div>
+            <div class="article-footer-info">
+              <a href="{{ url_for('blog.single_article_view', id=next_post['id'], title=next_post['title']| lower | replace(" ", "-")) }}">
+                <h4>{{next_post["title"]}}</h4>
+              </a>
+              <div class="tags">
+                {% for tag in next_post["tags"] %}
+                  <a href="{{ url_for('blog.bloglist_view', search=tag.lower(), _method='GET') }}" class="tag">{{tag}}</a>
+                {% endfor %}
+              </div>
             </div>
           </div>
-        </div>
-      {%- endif -%}
-      <div class="btn-center">
+        {%- endif -%}
+      </div>
+      <div class="center">
         <a class="btn go-back-btn" href="{{ url_for('blog.bloglist_view') }}"> Go back to all articles</a>
       </div>
     </div>
+
   </div>
 
 

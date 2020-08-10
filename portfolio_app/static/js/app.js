@@ -86,10 +86,10 @@ if (searchInput) {
 }
 
 if (blogArticle) {
-  const footer = document.querySelector(".article-footer");
-  if (footer.childNodes.length === 1) {
-    footer.classList.remove("article-footer");
-    footer.classList.add("article-footer-only-one");
+  const otherArticles = document.querySelector(".other-articles");
+  if (otherArticles.childNodes.length === 1) {
+    otherArticles.classList.remove("article-footer");
+    otherArticles.classList.add("article-footer-only-one");
 
   }
 }
