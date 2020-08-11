@@ -618,6 +618,91 @@ Projects
   }
 }
 
+@media screen and (min-width: 1170px) {
+  .projects-list-center {
+    grid-template-rows: repeat(4, 200px);
+    gap: 1rem;
+    grid-template-areas:
+      "a b b"
+      "a c d"
+      "e e f"
+      "e e g"
+      "h i g"
+      "j k k";
+  }
+
+  .project-img {
+    height: 100%;
+  }
+
+  .project {
+    height: 100%;
+  }
+
+  .project-1 {
+    grid-area: a;
+  }
+
+  .project-2 {
+    grid-area: b;
+  }
+
+  .project-3 {
+    grid-area: c;
+  }
+
+  .project-4 {
+    grid-area: d;
+  }
+
+  .project-5 {
+    grid-area: e;
+  }
+
+  .project-6 {
+    grid-area: f;
+  }
+
+  .project-7 {
+    grid-area: g;
+  }
+
+  .project-8 {
+    grid-area: h;
+  }
+
+  .project-9 {
+    grid-area: i;
+  }
+
+  .project-10 {
+    grid-area: j;
+  }
+
+  .project-11 {
+    grid-area: k;
+  }
+
+  .project-12 {
+    grid-area: l;
+  }
+
+  .project-13 {
+    grid-area: m;
+  }
+}
+
+/*
+===============
+Projects-list page
+===============
+*/
+.projects-list {
+  background-color: var(--clr-grey-9);
+  margin-top: 2rem;
+  min-height: calc(100vh - 13.5rem);
+}
+
 /*
 ===============
 Footer
@@ -775,7 +860,7 @@ Blog
   font-size: 0.85rem;
 }
 
-.view-all-btn {
+.margin-top-btn {
   margin-top: 2rem;
 }
 

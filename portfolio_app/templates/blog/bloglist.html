@@ -158,12 +158,12 @@
   </div>
   {% if g.user %}
     <div class="center">
-      <a class="btn" href="{{ url_for('blog.create_view') }}"> new article</a>
+      <a class="btn margin-top-btn" href="{{ url_for('blog.create_view') }}"> new article</a>
     </div>
   {% endif %}
   {% if search%}
     <div class="center">
-      <a class="btn" href="{{ url_for('blog.bloglist_view') }}"> All articles</a>
+      <a class="btn margin-top-btn" href="{{ url_for('blog.bloglist_view') }}"> All articles</a>
     </div>
   {% endif %}
 </section>

@@ -1,5 +1,50 @@
 {% extends "base.html" %}
 
+{% block title %} Projects {% endblock%}
+
 {% block content %}
+<section class="section projects-list">
+  <!-- section title -->
+  <div class="section-title">
+    <h2>My Projects</h2>
+    <div class="underline"></div>
+    <p class="projects-text">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est voluptas eum
+      cumque! Aut enim, facilis expedita eius laborum consectetur. Et
+      accusantium est rerum voluptatibus a dolores doloremque quidem magni mollitia?
+    </p>
+  </div>
+  <!-- end of section title -->
+  <div class="section-center projects-center projects-list-center">
+    <!-- single project -->
+    {% for repo in repos %}
+    <a href="{{repo.html_url}}" target="_blank" class="project-{{loop.index}}">
+      <article class="project">
+        <img src="{{ project_img[loop.index0] }}" alt="single project"
+          class="project-img">
+        <div class="project-info">
+          <h4>{{repo.name}}</h4>
+          <p>{{repo.description}}</p>
+        </div>
+      </article>
+    </a>
+    {% endfor %}
+
+    <!-- single project -->
+    <a href="https://vispa.physik.rwth-aachen.de/" target="_blank" class="project-{{repos | list | length + 1}}">
+      <article class="project">
+        <img src="{{ config.IMAGES_PATH }}/projects/vispa-frontend.png" alt="single project"
+          class="project-img">
+        <div class="project-info">
+          <h4>VISPA Webpage</h4>
+          <p>Frontend static webpage development</p>
+        </div>
+      </article>
+    </a>
+    <!-- end of single project -->
+  </div>
+</section>
+
+<!-- end of projects -->
 
 {% endblock%}
