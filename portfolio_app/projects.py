@@ -1,6 +1,4 @@
-import requests
 from github import Github
-from pprint import pprint
 from flask import Blueprint, render_template
 
 
@@ -9,16 +7,6 @@ bp = Blueprint("projects", __name__, url_prefix="/projects")
 
 @bp.route("/")
 def projectlist_view():
-    username = "solinuck"
-    url = "https://api.github.com/users/{}".format(username)
-    user_data = requests.get(url).json()
-
-    g = Github()
-
-    user = g.get_user(username)
-
-    for repo in user.get_repos():
-        readme = repo.get_readme().decoded_content
     return render_template("projects/projectlist.html")
 
 

@@ -34,7 +34,7 @@ def home_view():
     username = "solinuck"
     # url = "https://api.github.com/users/{}".format(username)
 
-    g = Github("17ed2ae3393526cd47ac67aeccb683d69c01ff31")
+    g = Github(current_app.config["GITHUB_TOKEN"])
 
     user = g.get_user(username)
 
