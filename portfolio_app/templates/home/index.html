@@ -85,56 +85,19 @@
   <!-- end of section title -->
   <div class="section-center projects-center">
     <!-- single project -->
-    <a href="./projects.html" class="project-1">
+    {% for repo in repos %}
+    <a href="{{repo.html_url}}" target="_blank" class="project-{{loop.index}}">
       <article class="project">
-        <img src="{{ config.IMAGES_PATH }}/projects/a-star.png" alt="single project"
+        <img src="{{ project_img[loop.index0] }}" alt="single project"
           class="project-img">
         <div class="project-info">
-          <h4>project title</h4>
-          <p>client name</p>
-        </div>
-      </article>
-    </a>
-    <!-- end of single project -->
 
-    <!-- single project -->
-    <a href="./projects.html" class="project-2">
-      <article class="project">
-        <img src="{{ config.IMAGES_PATH }}/projects/project-2.jpeg" alt="single project"
-          class="project-img">
-        <div class="project-info">
-          <h4>project title</h4>
-          <p>client name</p>
+          <h4>{{repo.name}}</h4>
+          <p>{{repo.description}}</p>
         </div>
       </article>
     </a>
-    <!-- end of single project -->
-
-    <!-- single project -->
-    <a href="./projects.html" class="project-3">
-      <article class="project">
-        <img src="{{ config.IMAGES_PATH }}/projects/chess-engine.png" alt="single project"
-          class="project-img">
-        <div class="project-info">
-          <h4>project title</h4>
-          <p>client name</p>
-        </div>
-      </article>
-    </a>
-    <!-- end of single project -->
-
-    <!-- single project -->
-    <a href="./projects.html" class="project-4">
-      <article class="project">
-        <img src="{{ config.IMAGES_PATH }}/projects/vispa-frontend.png" alt="single project"
-          class="project-img">
-        <div class="project-info">
-          <h4>project title</h4>
-          <p>client name</p>
-        </div>
-      </article>
-    </a>
-    <!-- end of single project -->
+    {% endfor %}
   </div>
 </section>
 <!-- end of projects -->

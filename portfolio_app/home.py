@@ -1,4 +1,6 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, current_app
+from github import Github
+import base64
 
 from .db import get_db
 import math
@@ -29,11 +31,33 @@ def home_view():
 
     reading_min = int(math.ceil(n_words / 225))  # average wpm 225
 
+    username = "solinuck"
+    # url = "https://api.github.com/users/{}".format(username)
+
+    g = Github("17ed2ae3393526cd47ac67aeccb683d69c01ff31")
+
+    user = g.get_user(username)
+
+    repos = user.get_repos()
+    project_img = []
+    i = 1
+    for repo in repos[:4]:
+        try:
+            project_img.append(
+                repo.get_contents("/img/readme-example.png").download_url
+            )
+        except:
+            project_img.append(
+                f"{current_app.config['IMAGES_PATH']}/projects/project-{i}.jpeg"
+            )
+            i += 1
     return render_template(
         "/home/index.html",
         posts=posts,
         n_article=n_article,
         reading_min=reading_min,
+        repos=repos,
+        project_img=project_img,
     )
 
 
