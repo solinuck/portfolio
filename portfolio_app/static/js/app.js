@@ -149,3 +149,58 @@ if (expandSearchBtn) {
     });
   });
 }
+
+
+
+const projectsCenter = document.querySelector(".projects-center");
+
+async function ajaxUser() {
+  const base = "https://api.github.com/users/";
+  const clientID = "4425ed62040a0d1ace3b";
+  const clientSecret = "fe313c4b30f340241ddab787a77f2116f861f732";
+  const user = "solinuck";
+  // repos url
+  const reposURL =
+    `${base}${user}/repos?client_id="${clientID}"&client_secret="${clientSecret}"`;
+
+  // get repos
+  const reposData = await fetch(reposURL, {
+    headers: {
+      'accept': 'application/vnd.github.mercy-preview+json'
+    }
+  });
+  const repos = await reposData.json();
+
+  return repos;
+}
+
+function displayRepos(repos) {
+  repos.forEach((repo, i) => {
+    const a = document.createElement("a");
+    a.classList.add(`project-${i + 1}`);
+    a.href = `${repo.html_url}`;
+    a.target = "_blank";
+    let topicsString = "";
+    repo.topics.forEach(topic => {
+      topicsString += `<span class="tag">${topic}</span>`;
+    });
+    a.innerHTML =
+      `
+    <article class="project">
+      <img src="https://raw.githubusercontent.com/solinuck/${repo.name}/master/img/readme-example.png" alt="single project" class="project-img">
+      <div class="project-info">
+        <h4>${repo.name}</h4>
+        <p>${repo.description}</p>
+        <div class="tags">
+          ${topicsString}
+        </div>
+      </div>
+    </article>
+    `;
+    projectsCenter.appendChild(a);
+  });
+}
+
+if (projectsCenter) {
+  ajaxUser().then(data => displayRepos(data));
+}

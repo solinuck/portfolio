@@ -41,7 +41,7 @@
       <ul class="list-dots search-date-list">
         <li class="search-year">
           <div class="date-option">
-            2020
+            <span class="year">20{{ year }}</span>
             <span class="option-menu">
               <i class="fas fa-angle-down" id="dropdown-btn"></i>
               <div class="year-option">
@@ -54,12 +54,12 @@
           <ul class="list-dots">
             <li class="search-month">
               <div class="date-option">
-              August
+              <span class="month">{{months[month]}}</span>
               <span class="option-menu">
                 <i class="fas fa-angle-down" id="dropdown-btn"></i>
                 <div class="month-option">
                   {%- for x in months -%}
-                    <a href="{{ url_for('blog.bloglist_view', search=search, year=year, month=months[x], expandsearch=True) }}">{{x}}</a>
+                    <a href="{{ url_for('blog.bloglist_view', search=search, year=year, month=x, expandsearch=True) }}">{{months[x]}}</a>
                   {% endfor %}
                 </div>
               </span>
@@ -96,7 +96,11 @@
 </section>
 <!-- end of expanded search -->
 
+{% if expandsearch %}
+<section class="section blog-articles blog-articles-small">
+{% else %}
 <section class="section blog-articles">
+{% endif %}
   <div class="section-center">
     <h3 class="current-search">
       {% if search %}

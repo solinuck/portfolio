@@ -40,17 +40,18 @@ def home_view():
 
     repos = user.get_repos()
     project_img = []
-    i = 1
-    for repo in repos[:4]:
-        try:
-            project_img.append(
-                repo.get_contents("/img/readme-example.png").download_url
-            )
-        except:
-            project_img.append(
-                f"{current_app.config['IMAGES_PATH']}/projects/project-{i}.jpeg"
-            )
-            i += 1
+    # i = 1
+    # for repo in repos[:4]:
+    #     try:
+    #         project_img.append(
+    #             repo.get_contents("/img/readme-example.png").download_url
+    #         )
+    #     except:
+    #         project_img.append(
+    #             f"{current_app.config['IMAGES_PATH']}/projects/project-{i}.jpeg"
+    #         )
+    #         i += 1
+    # print(project_img)
     return render_template(
         "/home/index.html",
         posts=posts,

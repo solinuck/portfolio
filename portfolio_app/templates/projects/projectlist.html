@@ -17,26 +17,7 @@
   <!-- end of section title -->
   <div class="section-center projects-center projects-list-center">
     <!-- single project -->
-    {% for repo in repos %}
-    <a href="{{repo.html_url}}" target="_blank" class="project-{{loop.index}}">
-      <article class="project">
-        <img src="{{ project_img[loop.index0] }}" alt="single project"
-          class="project-img">
-        <div class="project-info">
-          <h4>{{repo.name}}</h4>
-          <p>{{repo.description}}</p>
-          <div class="tags">
-            {% for topic in repo.get_topics() %}
-              <span class="tag">{{ topic }}</span>
-            {% endfor %}
-          </div>
-        </div>
-      </article>
-    </a>
-    {% endfor %}
-
-    <!-- single project -->
-    <a href="https://vispa.physik.rwth-aachen.de/" target="_blank" class="project-{{repos | list | length + 1}}">
+    <a href="https://vispa.physik.rwth-aachen.de/" target="_blank" class="project-5">
       <article class="project">
         <img src="{{ config.IMAGES_PATH }}/projects/vispa-frontend.png" alt="single project"
           class="project-img">
