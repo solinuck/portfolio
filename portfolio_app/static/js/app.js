@@ -6,6 +6,7 @@ const txta = document.getElementsByTagName('textarea');
 const addTagBtn = document.querySelector("#add-btn");
 const blogArticle = document.querySelector(".blog-article");
 const expandSearchBtn = document.querySelector(".expand-search-btn");
+const contactBtn = document.querySelector(".hero-btn");
 
 
 // show sidebar
@@ -28,6 +29,19 @@ for (let i = 0; i < txta.length; i++) {
 function OnInput() {
   this.style.height = 'auto';
   this.style.height = (this.scrollHeight) + 'px';
+}
+
+if (contactBtn) {
+  const contactInfos = document.querySelectorAll(".contact-info");
+  contactBtn.addEventListener("click", () => {
+    contactInfos.forEach((info) => {
+      info.classList.add("show-contact");
+      setTimeout(() => {
+        info.classList.remove("show-contact");
+      }, 20000);
+    });
+  });
+
 }
 
 // send filesize as a cookie
@@ -134,6 +148,4 @@ if (expandSearchBtn) {
       }
     });
   });
-
-
 }

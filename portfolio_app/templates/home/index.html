@@ -7,29 +7,33 @@
 <!-- header -->
 <header class="hero">
   <div class="section-center hero-center">
-    <article class="speech-bubble">
-      <div class="hero-info">
-        <div class="underline">
-        </div>
-        <h1>Hey I'm Erwin</h1>
-        <h4>freelance web developer</h4>
-        <ul class="social-icons hero-icons">
-          <li>
-            <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
-          </li>
-          <li>
-            <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
-          </li>
-          <li>
-            <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
-          </li>
-          <li>
-            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-          </li>
-        </ul>
+    <div class="hero-info">
+      <div class="speech-bubble">
+        <article class="hero-text">
+          <h1>Hey I'm Erwin</h1>
+          <h4>freelance web developer</h4>
+          <ul class="social-icons hero-icons">
+            <li>
+              <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+            </li>
+            <li>
+              <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+            </li>
+            <li>
+              <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+            </li>
+            <li>
+              <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            </li>
+          </ul>
+          <btn class="btn hero-btn">Get in contact</btn>
+        </article>
       </div>
+      <div class="contact-infos">
+        <p class="contact-info"><span class="contact-pre">Email:</span> erwin.rudi@gmail.com</p>
+        <p class="contact-info"><span class="contact-pre">Tel:</span> +4915730777128</p></div>
+    </div>
 
-    </article>
     <article class="hero-img">
       <img src="{{ config.IMAGES_PATH }}/home/hero-img.jpeg" class="hero-photo" alt="john doe">
     </article>
@@ -52,19 +56,12 @@
         <div class="underline"></div>
       </div>
       <!-- end of section title -->
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur doloribus
-        sit, vitae. Numquam, asperiores deserunt saepe voluptatibus
-        veniam velit accusantium reiciendis rem. Facilis dolores nisi, minus autem
-        distinctio magni fugiat
-        adipisci dolore consequatur placeat, quaerat molestiae. Libero delectus
-        aspernatur earum.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur doloribus
-        sit, vitae. Numquam, asperiores deserunt saepe voluptatibus
-        veniam velit accusantium reiciendis rem. Facilis dolores nisi, minus autem
-        distinctio magni fugiat
-        adipisci dolore consequatur placeat, quaerat molestiae. Libero delectus
-        aspernatur earum.</p>
-      <a href="/about" class="btn">more info</a>
+      <p>I'm currently writing my master thesis in physics at the RWTH Aachen Untiversity. As as physicist I love solving problems of any kind, be it technical or interpersonal. My technical interests are <span class="bold">Data Science</span>, <span class="bold">Machine Lerning</span> and <span class="bold">Web development</span>. </p>
+
+      <p>One thing that has always fascinated me is the human body in all it's complexity. My goal is to discover its full potential. That's why I'm always eager to learn something new from life and from people. I'm happy when making discoveries, especially when I can apply them in the real world.</p>
+
+      <p>Outside of uni and work I like to live a very active lifestlye with lots of sports, from working out and chess to volleyball and dancing. I love reading, creating things and spending time with family and friends.</p>
+      <a href="/about" class="btn">View CV</a>
     </article>
   </div>
 </section>
@@ -77,9 +74,8 @@
     <h2>My Projects</h2>
     <div class="underline"></div>
     <p class="projects-text">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est voluptas eum
-      cumque! Aut enim, facilis expedita eius laborum consectetur. Et
-      accusantium est rerum voluptatibus a dolores doloremque quidem magni mollitia?
+      I started my programming journey in June 2019.
+      Here you can see some of my projects, which will redirect you to the corresponding Github repositories.
     </p>
   </div>
   <!-- end of section title -->
@@ -91,13 +87,20 @@
         <img src="{{ project_img[loop.index0] }}" alt="single project"
           class="project-img">
         <div class="project-info">
-
           <h4>{{repo.name}}</h4>
           <p>{{repo.description}}</p>
+          <div class="tags">
+            {% for topic in repo.get_topics() %}
+              <span class="tag">{{ topic }}</span>
+            {% endfor %}
+          </div>
         </div>
       </article>
     </a>
     {% endfor %}
+  </div>
+  <div class="center margin-top-btn">
+    <a href="/projects" class="btn">View all projects</a>
   </div>
 </section>
 <!-- end of projects -->

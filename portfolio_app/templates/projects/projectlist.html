@@ -25,6 +25,11 @@
         <div class="project-info">
           <h4>{{repo.name}}</h4>
           <p>{{repo.description}}</p>
+          <div class="tags">
+            {% for topic in repo.get_topics() %}
+              <span class="tag">{{ topic }}</span>
+            {% endfor %}
+          </div>
         </div>
       </article>
     </a>
@@ -38,6 +43,9 @@
         <div class="project-info">
           <h4>VISPA Webpage</h4>
           <p>Frontend static webpage development</p>
+          <div class="tags">
+            <span class="tag">frontend</span>
+          </div>
         </div>
       </article>
     </a>
