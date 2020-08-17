@@ -826,6 +826,10 @@ Blog
   gap: 3rem 1rem;
 }
 
+.no-articles {
+  text-align: center;
+}
+
 .card {
   height: 27rem;
   position: relative;
@@ -949,7 +953,7 @@ Forms
  */
 .single-page {
   /* minus navbar minus footer*/
-  min-height: calc(100vh - 5rem - 11.5rem);
+  min-height: calc(100vh - 11.5rem);
   background: var(--clr-primary-10);
   display: grid;
   place-items: center;
@@ -1263,11 +1267,13 @@ Bloglist
 }
 
 .blog-articles {
-  min-height: calc(100vh - 5rem - 11.5rem);
+  padding-top: 8rem;
+  min-height: calc(100vh - 2rem - 11.5rem);
 }
 
 .blog-articles-small {
-  min-height: calc(100vh - 5rem - 11.5rem - 30rem);
+  margin-top: 0;
+  min-height: calc(100vh - 11.5rem - 30rem);
 }
 
 @media screen and (min-width: 992px) {
@@ -1401,21 +1407,23 @@ Timeline
 ===============
 */
 .about-hero {
-  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), url("../images/about/about-hero-large.jpg") center/cover no-repeat fixed;
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), url("../images/about/IMG_1344.JPG") center/cover no-repeat fixed;
   height: 100vh;
   text-align: justify;
+  display: grid;
+  place-items: center;
 }
 
 .about-hero-info {
   max-width: 850px;
   text-align: center;
-  margin-top: 6rem;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 10rem;
 }
 
 .about-page-title {
-  color: var(--clr-grey-8);
+  color: var(--clr-grey-10);
 }
 
 .about-page-title h2 {
@@ -1441,7 +1449,7 @@ Timeline
     margin-top: 0.4rem;
     right: 30%;
     left: -300%;
-    background: var(--clr-primary-10);
+    background: var(--clr-primary-6);
   }
 
   .long-underline-right {
@@ -1450,7 +1458,7 @@ Timeline
     margin-top: 0.4rem;
     left: 0;
     right: -300%;
-    background: var(--clr-primary-10);
+    background: var(--clr-primary-6);
   }
 
   .quote-part2 {

@@ -90,11 +90,13 @@ def bloglist_view(search, expandsearch, year, month):
         post["created"] = post["created"].strftime("%m/%d/%Y, %H:%M:%S")
         post["created"] = post["created"][:7] + post["created"][9:10]
 
-    n_words = (
-        post["intro"].count(" ") + post["body"].count(" ") + 4
-    )  # 2 additional words at beggining and end.
+    reading_min = None
+    if posts:
+        n_words = (
+            post["intro"].count(" ") + post["body"].count(" ") + 4
+        )  # 2 additional words at beggining and end.
 
-    reading_min = int(math.ceil(n_words / 225))  # average wpm 225
+        reading_min = int(math.ceil(n_words / 225))  # average wpm 225
 
     if search is not None:
         if request.method == "POST":
@@ -167,7 +169,7 @@ def create_view():
                 n = 0
                 while os.path.isfile(
                     os.path.join(
-                        current_app.config["IMAGE_UPLOADS"], imagename
+                        current_app.config["BLOG_UPLOADS"], imagename
                     )
                 ):
                     len_suff = len(image.filename.split(".")[1]) + 1
@@ -180,7 +182,7 @@ def create_view():
 
                 image.save(
                     os.path.join(
-                        current_app.config["IMAGE_UPLOADS"], imagename
+                        current_app.config["BLOG_UPLOADS"], imagename
                     )
                 )
             else:
@@ -295,7 +297,7 @@ def update_view(id):
 
                 image.save(
                     os.path.join(
-                        current_app.config["IMAGE_UPLOADS"], imagename
+                        current_app.config["BLOG_UPLOADS"], imagename
                     )
                 )
             else:
@@ -321,9 +323,7 @@ def update_view(id):
 def delete_view(id):
     post = get_post(id)
     os.remove(
-        os.path.join(
-            current_app.config["IMAGE_UPLOADS"], post["imagename"]
-        )
+        os.path.join(current_app.config["BLOG_UPLOADS"], post["imagename"])
     )
     db = get_db()
     db.execute("DELETE FROM post WHERE id = ?", (id,))

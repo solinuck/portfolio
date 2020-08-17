@@ -14,13 +14,13 @@
           <h4>freelance web developer</h4>
           <ul class="social-icons hero-icons">
             <li>
-              <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+              <a href="https://github.com/solinuck/" class="social-icon"><i class="fab fa-github"></i></a>
             </li>
             <li>
-              <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+              <a href="https://www.facebook.com/erwin.rudi.3" class="social-icon"><i class="fab fa-facebook"></i></a>
             </li>
             <li>
-              <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+              <a href="https://www.linkedin.com/in/erwin-rudi-0a694b197/" class="social-icon"><i class="fab fa-linkedin"></i></a>
             </li>
             <li>
               <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
@@ -35,7 +35,7 @@
     </div>
 
     <article class="hero-img">
-      <img src="{{ config.IMAGES_PATH }}/home/hero-img.jpeg" class="hero-photo" alt="john doe">
+      <img src="{{ config.IMAGES_PATH }}/home/IMG_0776.JPG" class="hero-photo" alt="john doe">
     </article>
   </div>
 </header>
@@ -46,7 +46,7 @@
   <div class="section-center about-center">
     <!-- about img -->
     <article class="about-img">
-      <img src="{{ config.IMAGES_PATH }}/home/about-img.jpeg" class="hero-photo" alt="about img">
+      <img src="{{ config.IMAGES_PATH }}/home/IMG_0505.JPG" class="hero-photo" alt="about img">
     </article>
     <!-- about info -->
     <article class="about-info">
@@ -95,59 +95,66 @@
     <div class="underline"></div>
   </div>
   <!-- end of section title -->
-  <div class="section-center blog-center">
-    {% for i in range(n_article) %}
-      <!-- single article -->
-      <div class="card">
-        <!-- front of the card -->
-        <div class="card-side card-front">
-          <a class="blog-card-link" href="{{ url_for('blog.single_article_view', id=posts[i]['id'], title=posts[i]['title']| lower | replace(" ", "-")) }}">
-            <div class="blog-card-img">
-              <img src="{{ config.IMAGE_UPLOADS_REL }}/{{ posts[i]['imagename']}}" alt="">
-              <div class="reading-time"> {{ reading_min}} min read</div>
-            </div>
-            <div class="card-info">
-              <h4>{{posts[i]['title']}}</h4>
-              <p>{{posts[i]['intro']}}</p>
-              <div class="card-footer">
-                <div class="tags">
-                  {% for tag in posts[i]["tags"] %}
-                    <span class="tag">{{tag}}</span>
-                  {% endfor %}
-                </div>
-                <p>{{(posts[i]['created'])[:10] }}</p>
+  {% if posts | length == 0%}
+    <p class="no-articles">Unfortunately, there are no blog articles yet :&#40;</p>
+  {% else %}
+    <div class="section-center blog-center">
+      {% for i in range(n_article) %}
+        <!-- single article -->
+        <div class="card">
+          <!-- front of the card -->
+          <div class="card-side card-front">
+            <a class="blog-card-link" href="{{ url_for('blog.single_article_view', id=posts[i]['id'], title=posts[i]['title']| lower | replace(" ", "-")) }}">
+              <div class="blog-card-img">
+                <img src="{{ config.IMAGE_UPLOADS_REL }}/{{ posts[i]['imagename']}}" alt="">
+                <div class="reading-time"> {{ reading_min}} min read</div>
               </div>
-            </div>
-          </a>
-        </div>
-        <!-- end of front of the card -->
+              <div class="card-info">
+                <h4>{{posts[i]['title']}}</h4>
+                <p>{{posts[i]['intro']}}</p>
+                <div class="card-footer">
+                  <div class="tags">
+                    {% for tag in posts[i]["tags"] %}
+                      <span class="tag">{{tag}}</span>
+                    {% endfor %}
+                  </div>
+                  <p>{{(posts[i]['created'])[:10] }}</p>
+                </div>
+              </div>
+            </a>
+          </div>
+          <!-- end of front of the card -->
 
-        <!-- back of the card -->
-        <div class="card-side card-back">
-            <div class="article-beginning">
-              <div class="fade-out"></div>
-              {%- for p in posts[i]["body"] -%}
-                {% if p == "" %}
-                  <br>
-                {% endif %}
-                <p>{{ p }}</p>
-              {%- endfor -%}
-              <a href="{{ url_for('blog.single_article_view', id=posts[i]['id'], title=posts[i]['title']| lower | replace(" ", "-")) }}" class="btn read-more">read more</a>
-            </div>
-            <div class="tags">
-              {% for tag in posts[i]["tags"] %}
-                <a class="tag-link" href="{{ url_for('blog.bloglist_view', search=tag.lower())}}">
-                  {{tag}}
-                </a>
-              {% endfor %}
-            </div>
+          <!-- back of the card -->
+          <div class="card-side card-back">
+              <div class="article-beginning">
+                <div class="fade-out"></div>
+                {%- for p in posts[i]["body"] -%}
+                  {% if p == "" %}
+                    <br>
+                  {% endif %}
+                  <p>{{ p }}</p>
+                {%- endfor -%}
+                <a href="{{ url_for('blog.single_article_view', id=posts[i]['id'], title=posts[i]['title']| lower | replace(" ", "-")) }}" class="btn read-more">read more</a>
+              </div>
+              <div class="tags">
+                {% for tag in posts[i]["tags"] %}
+                  <a class="tag-link" href="{{ url_for('blog.bloglist_view', search=tag.lower())}}">
+                    {{tag}}
+                  </a>
+                {% endfor %}
+              </div>
+          </div>
+          <!-- end of back of the card -->
         </div>
-        <!-- end of back of the card -->
-      </div>
-      <!-- end of single article -->
-    {% endfor %}
+        <!-- end of single article -->
+      {% endfor %}
+    </div>
+  {% endif %}
 
-  </div>
+
+
+
   <div class="center margin-top-btn">
     <a href="/blog" class="btn">view all articles</a>
   </div>

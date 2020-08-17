@@ -102,63 +102,67 @@
 <section class="section blog-articles">
 {% endif %}
   <div class="section-center">
-    <h3 class="current-search">
-      {% if search %}
-        Search for: <span class="search-display">{{ search }}</span>
-      {% else %}
-        All articles
-      {% endif %}
-    </h3>
-    <div class="blog-center">
-      {% for post in search_posts %}
-        <!-- single article -->
-        <div class="card">
-          <div class="card-side card-front">
-            <!-- front of the card -->
-            <div class="blog-card-img">
-              <img src="{{ config['IMAGE_UPLOADS_REL'] }}/{{ post['imagename'] }}" alt="">
-              <div class="reading-time"> {{reading_min}} min read</div>
+    {% if posts | length == 0%}
+      <p class="no-articles">Unfortunately, there are no blog articles yet :&#40;</p>
+    {% else %}
+      <h3 class="current-search">
+        {% if search %}
+          Search for: <span class="search-display">{{ search }}</span>
+        {% else %}
+          All articles
+        {% endif %}
+      </h3>
+      <div class="blog-center">
+        {% for post in search_posts %}
+          <!-- single article -->
+          <div class="card">
+            <div class="card-side card-front">
+              <!-- front of the card -->
+              <div class="blog-card-img">
+                <img src="{{ config['IMAGE_UPLOADS_REL'] }}/{{ post['imagename'] }}" alt="">
+                <div class="reading-time"> {{reading_min}} min read</div>
+              </div>
+              <div class="card-info">
+                <h4>{{post['title']}}</h4>
+                <p>{{post['intro']}}</p>
+                <div class="card-footer">
+                  <div class="tags">
+                    {% for tag in post["tags"] %}
+                      <span class="tag">{{tag}}</span>
+                    {% endfor %}
+                  </div>
+                  <p>{{(post['created'])[:10] }}</p>
+                </div>
+              </div>
             </div>
-            <div class="card-info">
-              <h4>{{post['title']}}</h4>
-              <p>{{post['intro']}}</p>
-              <div class="card-footer">
+            <!-- end of front of the card -->
+
+            <!-- back of the card -->
+            <div class="card-side card-back">
+                <div class="article-beginning">
+                  <div class="fade-out"></div>
+                  {%- for p in post["body"] -%}
+                    {% if p == "" %}
+                      <br>
+                    {% endif %}
+                    <p>{{ p }}</p>
+                  {%- endfor -%}
+                  <a href="{{ url_for('blog.single_article_view', id=post['id'], title=post['title']| lower | replace(" ", "-")) }}" class="btn read-more">read more</a>
+                </div>
                 <div class="tags">
                   {% for tag in post["tags"] %}
-                    <span class="tag">{{tag}}</span>
+                    <a class="tag-link" href="{{ url_for('blog.bloglist_view', search=tag.lower(), _method='GET') }}">
+                      {{tag}}
+                    </a>
                   {% endfor %}
                 </div>
-                <p>{{(post['created'])[:10] }}</p>
-              </div>
             </div>
+            <!-- end of back of the card -->
           </div>
-          <!-- end of front of the card -->
-
-          <!-- back of the card -->
-          <div class="card-side card-back">
-              <div class="article-beginning">
-                <div class="fade-out"></div>
-                {%- for p in post["body"] -%}
-                  {% if p == "" %}
-                    <br>
-                  {% endif %}
-                  <p>{{ p }}</p>
-                {%- endfor -%}
-                <a href="{{ url_for('blog.single_article_view', id=post['id'], title=post['title']| lower | replace(" ", "-")) }}" class="btn read-more">read more</a>
-              </div>
-              <div class="tags">
-                {% for tag in post["tags"] %}
-                  <a class="tag-link" href="{{ url_for('blog.bloglist_view', search=tag.lower(), _method='GET') }}">
-                    {{tag}}
-                  </a>
-                {% endfor %}
-              </div>
-          </div>
-          <!-- end of back of the card -->
-        </div>
-        <!-- end of single article -->
-      {% endfor %}
-    </div>
+          <!-- end of single article -->
+        {% endfor %}
+      </div>
+    {% endif %}
   </div>
   {% if g.user %}
     <div class="center">

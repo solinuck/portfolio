@@ -114,6 +114,7 @@ if (expandSearchBtn) {
   const articlesSection = document.querySelector(".blog-articles");
   expandSearchBtn.addEventListener("click", function() {
     articlesSection.classList.toggle("blog-articles-small");
+    articlesSection.classList.toggle("blog-articles");
     if (expandSearchArrow.classList.contains("rotate")) {
       searchContainer.classList.remove("z-index");
       setTimeout(function() {
