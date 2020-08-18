@@ -527,8 +527,8 @@ Hero
 }
 
 .hero-photo {
-  max-width: 20rem;
-  max-height: 35rem;
+  max-width: 22rem;
+  max-height: 37rem;
   object-fit: cover;
   border-radius: var(--radius);
   position: relative;
@@ -1435,7 +1435,7 @@ Timeline
 ===============
 */
 .about-hero {
-  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), url("../images/about/IMG_1344.JPG") center/cover no-repeat fixed;
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), url("../images/about/about-hero.JPG") center/cover no-repeat fixed;
   height: calc(100vh - 5rem);
   text-align: justify;
   display: grid;

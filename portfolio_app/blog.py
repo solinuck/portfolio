@@ -231,19 +231,18 @@ def update_view(id):
         db.session.commit()
         flash("Your post has been updated", "success")
         return redirect(url_for("blog.bloglist_view"))
-
-    post = post_in_dict(post)
-    form.title.data = post["title"]
-    form.intro.data = post["intro"]
-    body_string = ""
-    for i, p in enumerate(post["body"]):
-        if p == "":
-            p = "\n"
-        body_string += p
-    form.body.data = body_string
-    form.image.data = post["image_file"]
-
-    form.tag0.data = post["tags"][0]
+    elif request.method == "GET":
+        post = post_in_dict(post)
+        form.title.data = post["title"]
+        form.intro.data = post["intro"]
+        body_string = ""
+        for i, p in enumerate(post["body"]):
+            if p == "":
+                p = "\n"
+            body_string += p
+        form.body.data = body_string
+        form.image.data = post["image_file"]
+        form.tag0.data = post["tags"][0]
 
     return render_template(
         "blog/create_article.html",
@@ -254,15 +253,16 @@ def update_view(id):
     )
 
 
-@bp.route("<int:id>/delete")
+@bp.route("<int:id>/delete", methods=["GET", "POST"])
 @login_required
 def delete_view(id):
     post = Post.query.get_or_404(id)
-    os.remove(
-        os.path.join(current_app.config["BLOG_UPLOADS"], post["imagename"])
-    )
-    db.execute("DELETE FROM post WHERE id = ?", (id,))
-    db.commit()
+    if post.author != current_user:
+        print("test")
+        abort(403)
+    db.session.delete(post)
+    db.session.commit()
+    flash("Your post has been deleted", "success")
     return redirect(url_for("blog.bloglist_view"))
 
 

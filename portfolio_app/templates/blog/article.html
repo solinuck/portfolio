@@ -30,7 +30,7 @@
     <form action="{{ url_for('blog.delete_view', id=post['id']) }}">
     <div class="center ">
       <button class="btn btn-center" type="submit" formaction="{{ url_for('blog.update_view', id=post['id']) }}"> Edit </button>
-      <button class="btn danger btn-center" type="submit" onclick="return confirm('Are you sure?');"> Delete </button>
+      <button class="btn danger btn-center" type="submit" onclick="return confirm('Are you sure?');" formaction="{{ url_for('blog.delete_view', id=post['id']) }}"> Delete </button>
     </div>
     </form>
     {% endif %}
