@@ -3,7 +3,7 @@
 {% block title %}" Blog - {{ post['title'] }}"{% endblock %}
 
 {% block content %}
-  <img class="single-article-image" src="{{ config['IMAGE_UPLOADS_REL'] }}/{{ post['imagename'] }}" alt="">
+  <img class="single-article-image" src="{{ config['IMAGE_UPLOADS_REL'] }}/{{ post['image_file'] }}" alt="">
   <div class="blog-article">
     <article class="single-article section-center">
       <h1 class="article-title">{{ post['title'] }}</h1>
@@ -26,7 +26,7 @@
         {% endfor %}
       </div>
     </article>
-    {% if g.user %}
+    {% if current_user.is_authenticated %}
     <form action="{{ url_for('blog.delete_view', id=post['id']) }}">
     <div class="center ">
       <button class="btn btn-center" type="submit" formaction="{{ url_for('blog.update_view', id=post['id']) }}"> Edit </button>

@@ -1,17 +1,9 @@
 import os
-
 import re
+import secrets
 import math
 from datetime import datetime
 
-today = datetime.today()
-if len(str(today.month)) == 1:
-    today_month = "0" + str(today.month)
-else:
-    today_month = str(today.month)
-
-
-today_year = str(today.year)[2:]
 from flask import (
     Blueprint,
     render_template,
@@ -22,11 +14,23 @@ from flask import (
     url_for,
     abort,
     current_app,
+    abort,
 )
-from werkzeug.utils import secure_filename
 
-from .auth import login_required
-from .db import get_db
+from flask_login import login_required, current_user
+from portfolio_app.forms import PostForm
+from portfolio_app.models import Post
+from portfolio_app import db
+
+
+today = datetime.today()
+if len(str(today.month)) == 1:
+    today_month = "0" + str(today.month)
+else:
+    today_month = str(today.month)
+
+
+today_year = str(today.year)[2:]
 
 bp = Blueprint("blog", __name__, url_prefix="/blog")
 
@@ -75,43 +79,43 @@ def bloglist_view(search, expandsearch, year, month):
         "12": "December",
     }
 
-    db = get_db()
-
-    posts = db.execute(
-        "SELECT p.id, title, imagename, intro, body, tags, created, author_id, username"
-        " FROM post p JOIN user u ON p.author_id = u.id"
-        " ORDER BY created DESC"
-    ).fetchall()
-
-    posts = [dict(post) for post in posts]
+    posts = Post.query.all()
+    post_list = []
     for post in posts:
-        post["tags"] = eval(post["tags"])
-        post["body"] = eval(post["body"])
-        post["created"] = post["created"].strftime("%m/%d/%Y, %H:%M:%S")
-        post["created"] = post["created"][:7] + post["created"][9:10]
-
-    reading_min = None
-    if posts:
+        post_dict = {}
+        post_dict["id"] = post.id
+        post_dict["title"] = post.title
+        post_dict["intro"] = post.intro
+        post_dict["image_file"] = post.image_file
+        post_dict["tags"] = eval(post.tags)
+        post_dict["date_posted"] = post.date_posted.strftime(
+            "%m/%d/%Y, %H:%M:%S"
+        )
+        post_dict["date_posted"] = (
+            post_dict["date_posted"][:7] + post_dict["date_posted"][9:10]
+        )
+        post_dict["body"] = eval(post.body)
         n_words = (
-            post["intro"].count(" ") + post["body"].count(" ") + 4
+            post.intro.count(" ") + post.body.count(" ") + 4
         )  # 2 additional words at beggining and end.
-
-        reading_min = int(math.ceil(n_words / 225))  # average wpm 225
+        post_dict["reading_min"] = int(
+            math.ceil(n_words / 225)
+        )  # average wpm 225
+        post_list.append(post_dict)
 
     if search is not None:
         if request.method == "POST":
             search = request.form["search"]
         if search.replace(" ", "") != "":
-            search_posts = search_func(posts, search)
+            search_posts = search_func(post_list, search)
     else:
-        search_posts = posts
+        search_posts = post_list
 
     return render_template(
         "blog/bloglist.html",
-        posts=posts,
+        posts=post_list,
         search_posts=search_posts,
         search=search,
-        reading_min=reading_min,
         months=months,
         year=year,
         month=month,
@@ -119,11 +123,11 @@ def bloglist_view(search, expandsearch, year, month):
     )
 
 
-def search_func(posts, search):
+def search_func(post_list, search):
     search_words = re.sub("[^A-Za-z0-9 ]+", "", search.lower())
     search_words = search_words.split()
     ids = []
-    for post in posts:
+    for post in post_list:
         title = post["title"]
         tags = [
             tag_word
@@ -137,122 +141,32 @@ def search_func(posts, search):
             if search_word in all_words:
                 ids.append(post["id"])
 
-    return [post for post in posts if post["id"] in ids]
+    return [post for post in post_list if post["id"] in ids]
 
 
-@bp.route("/create", methods=("GET", "POST"))
-@login_required
-def create_view():
-    if request.method == "POST":
-        title = request.form["title"]
-        body = request.form["body"]
-        intro = request.form["intro"]
-        image = request.files["image"]
-        imagename = None
-        tags = [
-            request.form[f"tag-{n}"]
-            for n in range(5)
-            if f"tag-{n}" in request.form
-        ]
-
-        error = None
-
-        if request.files["image"] and "filesize" in request.cookies:
-            if not allowed_image_filesize(request.cookies["filesize"]):
-                error = "Filesize exceeded maximum limit."
-
-            if image.filename == "":
-                error = "no filename"
-
-            if allowed_image(image.filename):
-                imagename = secure_filename(image.filename)
-                n = 0
-                while os.path.isfile(
-                    os.path.join(
-                        current_app.config["BLOG_UPLOADS"], imagename
-                    )
-                ):
-                    len_suff = len(image.filename.split(".")[1]) + 1
-                    imagename = (
-                        imagename[:-len_suff]
-                        + f"{n}"
-                        + imagename[-len_suff:]
-                    )
-                    n += 1
-
-                image.save(
-                    os.path.join(
-                        current_app.config["BLOG_UPLOADS"], imagename
-                    )
-                )
-            else:
-                error = "That file extension is not allowed."
-
-        if not title:
-            error = "Title is required."
-
-        if len(tags) == 0:
-            error = "One tag is required."
-
-        if error is not None:
-            flash(error)
-            redirect(request.url)
-        else:
-            html_body = str(body.replace("\r", "").split("\n"))
-
-            db = get_db()
-            db.execute(
-                "INSERT INTO post (title, imagename, intro, body, tags, author_id)"
-                " VALUES (?, ?, ?, ?, ?, ?)",
-                (
-                    title,
-                    imagename,
-                    intro,
-                    html_body,
-                    repr(tags),
-                    g.user["id"],
-                ),
-            )
-            db.commit()
-            return redirect(url_for("blog.bloglist_view"))
-
-    return render_template("blog/create_article.html")
-
-
-def get_post(id, check_author=True, check_other=False):
-    post = (
-        get_db()
-        .execute(
-            "SELECT p.id, title, imagename, intro, body, tags, created, author_id, username"
-            " FROM post p JOIN user u ON p.author_id = u.id"
-            " WHERE p.id = ?",
-            (id,),
-        )
-        .fetchone()
+def save_image(form_image):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_image.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(
+        current_app.config["BLOG_UPLOADS"], picture_fn
     )
-
-    if post is None:
-        if not check_other:
-            abort(404, "Article id {0} doesn't exist.".format(id))
-    else:
-        post = dict(post)
-        post["tags"] = eval(post["tags"])
-        post["body"] = eval(post["body"])
-
-    if check_author and post["author_id"] != g.user["id"]:
-        if not check_other:
-            abort(403)
-
-    return post
+    form_image.save(picture_path)
+    return picture_fn
 
 
 @bp.route("/<title>-<int:id>/")
 def single_article_view(id, title):
-    curr_post = get_post(id, False)
+    curr_post = Post.query.get_or_404(id)
+    curr_post = post_in_dict(curr_post)
 
-    # try:
-    prev_post = get_post(id - 1, check_author=False, check_other=True)
-    next_post = get_post(id + 1, check_author=False, check_other=True)
+    prev_post = Post.query.get(id - 1)
+    if prev_post:
+        prev_post = post_in_dict(curr_post)
+
+    next_post = Post.query.get(id + 1)
+    if next_post:
+        next_post = post_in_dict(curr_post)
     return render_template(
         "blog/article.html",
         post=curr_post,
@@ -261,94 +175,115 @@ def single_article_view(id, title):
     )
 
 
-@bp.route("/<int:id>/update", methods=("GET", "POST"))
+@bp.route("/create", methods=["GET", "POST"])
+@login_required
+def create_view():
+    form = PostForm()
+    if form.validate_on_submit():
+        image_file = save_image(form.image.data)
+        tags = [
+            request.form[f"tag{n}"]
+            for n in range(5)
+            if f"tag{n}" in request.form
+        ]
+        html_body = str(form.body.data.replace("\r", "").split("\n"))
+
+        post = Post(
+            title=form.title.data,
+            author=current_user,
+            intro=form.intro.data,
+            image_file=image_file,
+            body=html_body,
+            tags=repr(tags),
+        )
+        db.session.add(post)
+        db.session.commit()
+        flash("Your post has been created!", "success")
+        return redirect(url_for("blog.bloglist_view"))
+
+    return render_template(
+        "blog/create_article.html", legend="New Post", form=form
+    )
+
+
+@bp.route("/<int:id>/update", methods=["GET", "POST"])
 @login_required
 def update_view(id):
-    post = get_post(id)
+    post = Post.query.get_or_404(id)
+    if post.author != current_user:
+        abort(403)
+    form = PostForm()
+    if form.validate_on_submit():
+        if form.image.data:
+            image_file = save_image(form.image.data)
+            post.image_file = image_file
 
-    if request.method == "POST":
-        title = request.form["title"]
-        body = request.form["body"]
-        intro = request.form["intro"]
-        image = request.files["image"]
-        imagename = "project-3.jpeg"
-        tags = [
-            request.form[f"tag-{n}"]
-            for n in range(5)
-            if f"tag-{n}" in request.form
-        ]
-        error = None
+        post.title = form.title.data
+        post.intro = form.intro.data
+        post.body = str(form.body.data.replace("\r", "").split("\n"))
+        post.tags = repr(
+            [
+                request.form[f"tag{n}"]
+                for n in range(5)
+                if f"tag{n}" in request.form
+            ]
+        )
+        db.session.commit()
+        flash("Your post has been updated", "success")
+        return redirect(url_for("blog.bloglist_view"))
 
-        if not title:
-            error = "Title is required."
+    post = post_in_dict(post)
+    form.title.data = post["title"]
+    form.intro.data = post["intro"]
+    body_string = ""
+    for i, p in enumerate(post["body"]):
+        if p == "":
+            p = "\n"
+        body_string += p
+    form.body.data = body_string
+    form.image.data = post["image_file"]
 
-        if tags[0] == "":
-            error = "One tag is required."
+    form.tag0.data = post["tags"][0]
 
-        if request.files["image"] and "filesize" in request.cookies:
-            if not allowed_image_filesize(request.cookies["filesize"]):
-                error = "Filesize exceeded maximum limit"
-
-            if image.filename == "":
-                error = "no filename"
-
-            if allowed_image(image.filename):
-                imagename = secure_filename(image.filename)
-
-                image.save(
-                    os.path.join(
-                        current_app.config["BLOG_UPLOADS"], imagename
-                    )
-                )
-            else:
-                error = "That file extension is not allowed"
-
-        if error is not None:
-            flash(error)
-        else:
-            db = get_db()
-            db.execute(
-                "UPDATE post SET title = ?, imagename = ?, intro = ?, body = ?, tags= ?"
-                " WHERE id = ?",
-                (title, imagename, intro, body, repr(tags), id),
-            )
-            db.commit()
-            return redirect(url_for("blog.bloglist_view"))
-
-    return render_template("blog/update.html", post=post)
+    return render_template(
+        "blog/create_article.html",
+        legend="Update Post",
+        form=form,
+        tags=post["tags"],
+        image_file=True,
+    )
 
 
 @bp.route("<int:id>/delete")
 @login_required
 def delete_view(id):
-    post = get_post(id)
+    post = Post.query.get_or_404(id)
     os.remove(
         os.path.join(current_app.config["BLOG_UPLOADS"], post["imagename"])
     )
-    db = get_db()
     db.execute("DELETE FROM post WHERE id = ?", (id,))
     db.commit()
     return redirect(url_for("blog.bloglist_view"))
 
 
-def allowed_image(filename):
-    # We only want files with a . in the filename
-    if "." not in filename:
-        return False
-
-    # Split the extension from the filename
-    ext = filename.rsplit(".", 1)[1]
-
-    # Check if the extension is in ALLOWED_IMAGE_EXTENSIONS
-    if ext.upper() in current_app.config["ALLOWED_IMAGE_EXTENSIONS"]:
-        return True
-    else:
-        return False
-
-
-def allowed_image_filesize(filesize):
-
-    if int(filesize) <= current_app.config["MAX_IMAGE_FILESIZE"]:
-        return True
-    else:
-        return False
+def post_in_dict(posts):
+    post_dict = {}
+    post_dict["id"] = posts.id
+    post_dict["title"] = posts.title
+    post_dict["intro"] = posts.intro
+    post_dict["image_file"] = posts.image_file
+    post_dict["tags"] = eval(posts.tags)
+    post_dict["date_posted"] = posts.date_posted.strftime(
+        "%m/%d/%Y, %H:%M:%S"
+    )
+    post_dict["date_posted"] = (
+        post_dict["date_posted"][:7] + post_dict["date_posted"][9:10]
+    )
+    post_dict["body"] = eval(posts.body)
+    n_words = (
+        posts.intro.count(" ") + posts.body.count(" ") + 4
+    )  # 2 additional words at beggining and end.
+    post_dict["reading_min"] = int(
+        math.ceil(n_words / 225)
+    )  # average wpm 225
+    return post_dict

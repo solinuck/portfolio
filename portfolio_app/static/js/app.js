@@ -7,6 +7,7 @@ const addTagBtn = document.querySelector("#add-btn");
 const blogArticle = document.querySelector(".blog-article");
 const expandSearchBtn = document.querySelector(".expand-search-btn");
 const contactBtn = document.querySelector(".hero-btn");
+const flashMessages = document.querySelector(".flash");
 
 
 // show sidebar
@@ -41,7 +42,6 @@ if (contactBtn) {
       }, 20000);
     });
   });
-
 }
 
 // send filesize as a cookie
@@ -56,10 +56,9 @@ if (addTagBtn) {
   const articleTags = document.querySelector(".article-tags");
   const tagText = document.querySelector(".tag-text");
   addTagBtn.addEventListener("click", function() {
-    // if (articleTags.childNodes.length < 5) {
     let input = document.createElement('input');
     input.type = "text";
-    input.name = `tag-${articleTags.childNodes.length}`;
+    input.name = `tag${articleTags.childNodes.length}`;
     input.classList.add("create-tag");
     articleTags.appendChild(input);
     tagText.classList.remove("show");
@@ -104,7 +103,6 @@ if (blogArticle) {
   if (otherArticles.childNodes.length === 1) {
     otherArticles.classList.remove("article-footer");
     otherArticles.classList.add("article-footer-only-one");
-
   }
 }
 
@@ -204,4 +202,10 @@ function displayRepos(repos) {
 
 if (projectsCenter) {
   ajaxUser().then(data => displayRepos(data));
+}
+
+if (flashMessages) {
+  setTimeout(() => {
+    flashMessages.style.display = "none";
+  }, 2000);
 }

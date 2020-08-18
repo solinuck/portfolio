@@ -90,6 +90,18 @@
   </aside>
   <!-- end of sidebar -->
 
+  <!-- ********************** flashed massage ********************** -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert-{{ category }} flash">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  <!-- ******************** end of flashed massage ******************** -->
+
   <!-- ********************** content ********************** -->
   {% block content %}
 
@@ -119,26 +131,7 @@
 
 
   <script type="text/javascript" src="{{ url_for('static', filename='js/app.js')}}">
-
   </script>
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-        <script type="text/javascript">
-          const messages = {{messages | safe}};
-          const flash_field = document.querySelector(".flash");
-          for (const message of messages) {
-            flash_field.firstChild.textContent = `${message}`;
-          }
-          // flash_field.classList.add("showFlash")
-          flash_field.style.opacity = 1
-          setTimeout(() => {
-            // flash_field.classList.remove("showFlash")
-            flash_field.style.opacity = 0
-          }, 3000)
-
-        </script>
-    {% endif %}
-  {% endwith %}
 </body>
 
 </html>

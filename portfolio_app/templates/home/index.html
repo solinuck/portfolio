@@ -106,8 +106,8 @@
           <div class="card-side card-front">
             <a class="blog-card-link" href="{{ url_for('blog.single_article_view', id=posts[i]['id'], title=posts[i]['title']| lower | replace(" ", "-")) }}">
               <div class="blog-card-img">
-                <img src="{{ config.IMAGE_UPLOADS_REL }}/{{ posts[i]['imagename']}}" alt="">
-                <div class="reading-time"> {{ reading_min}} min read</div>
+                <img src="{{ config.IMAGE_UPLOADS_REL }}/{{ posts[i]['image_file']}}" alt="">
+                <div class="reading-time"> {{ posts[i]["reading_min"]}} min read</div>
               </div>
               <div class="card-info">
                 <h4>{{posts[i]['title']}}</h4>
@@ -118,7 +118,7 @@
                       <span class="tag">{{tag}}</span>
                     {% endfor %}
                   </div>
-                  <p>{{(posts[i]['created'])[:10] }}</p>
+                  <p>{{(posts[i]['date_posted'])[:10] }}</p>
                 </div>
               </div>
             </a>

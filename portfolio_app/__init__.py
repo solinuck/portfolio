@@ -1,25 +1,23 @@
-import os
-
 from flask import Flask
-from . import db, auth, blog, home, projects
+from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
+from flask_login import LoginManager
 
 
-def create_app(test_config=None):
-    app = Flask(__name__, instance_relative_config=True)
+app = Flask(__name__, instance_relative_config=True)
+app.config.from_object("config.DevelopmentConfig")
 
-    app.config.from_object("config.DevelopmentConfig")
+db = SQLAlchemy(app)
+bcrypt = Bcrypt(app)
+login_manager = LoginManager(app)
+login_manager.login_view = "auth.login_view"
 
-    # ensure the instance folder exists
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        pass
+from portfolio_app import auth, blog, home, projects
 
-    db.init_app(app)
-    app.register_blueprint(auth.bp)
-    app.register_blueprint(blog.bp)
-    app.register_blueprint(home.bp)
-    app.register_blueprint(projects.bp)
-    app.add_url_rule("/", endpoint="index")
 
-    return app
+# db.init_app(app)
+app.register_blueprint(auth.bp)
+app.register_blueprint(blog.bp)
+app.register_blueprint(home.bp)
+app.register_blueprint(projects.bp)
+app.add_url_rule("/", endpoint="index")

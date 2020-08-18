@@ -10,19 +10,38 @@
       <h2>Edit {{ post['title'] }}</h2>
     </div>
     <div class="form-box ">
-      <div class="flash center">replace me</div>
-
       <form class="form" method="post" enctype="multipart/form-data">
         <!-- Title -->
-        <label class="form-label" for="title">Title</label>
-        <input type="text" name="title" maxlength="50" id="title" value="{{ request.form['title'] or post['title'] }}" required>
+        {{ form.hidden_tag() }}
+
+        {{ form.title.label(class="form-label")}}
+        {% if form.title.errors %}
+          {{ form.title() }}
+          <div class="invalid-feedback">
+            {% for error in form.title.errors%}
+              <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+        {% else %}
+          {{ form.title(placeholder="Title") }}
+        {% endif%}
         <!-- End of Title -->
 
         <!-- Image input -->
         <div class="image-input-container">
 
-          <input type="file" class="hidden-btn" name="image" id="image" oninput="filesize(this)" value="Select file" >
-          <label class="custom-file-label form-label" for="image"><i class="fas fa-upload"></i> Select image</label>
+
+          {% if form.image.errors %}
+            {{ form.image() }}
+            <div class="invalid-feedback">
+              {% for error in form.image.errors%}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.image(class="hidden-btn") }}
+          {% endif%}
+          {{ form.image.label(class="custom-file-label form-label")}}
 
           <span class="selected-image">No image selected</span>
         </div>
@@ -30,14 +49,31 @@
         <!-- End of Image input -->
 
         <!-- Intro -->
-        <label class="form-label" for="body">Introduction</label>
-        <textarea class="article-input" type="text" maxlength="200" name="intro" rows="5" id="body">{{ request.form['intro'] or post['intro'] }}</textarea>
+        {{ form.intro.label(class="form-label")}}
+        {% if form.intro.errors %}
+          {{ form.intro() }}
+          <div class="invalid-feedback">
+            {% for error in form.intro.errors%}
+              <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+        {% else %}
+          {{ form.intro(class="article-input", rows='5') }}
+        {% endif%}
         <!-- End of Intro -->
 
         <!-- Body -->
-        <label class="form-label" for="body">Body</label>
-        <textarea class="article-input" type="text" name="body" rows="10" id="body">{{ request.form['body'] or post['body'] }}</textarea>
-        <!-- End of Body -->
+        {{ form.body.label(class="form-label")}}
+        {% if form.body.errors %}
+          {{ form.body() }}
+          <div class="invalid-feedback">
+            {% for error in form.body.errors%}
+              <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+        {% else %}
+          {{ form.body(class="article-input", rows='10') }}
+        {% endif%}
 
         <!-- Tags -->
         <div class="tag-form">
@@ -46,17 +82,13 @@
           <span class="delete-tag-btn">-</span>
           <div class="tag-field">
             <span class="tag-text">Add at least one Tag</span>
-            <div class="article-tags">
-              {%- for tag in post["tags"] -%}
-              <input class="create-tag" name="tag-0" id="tag" value="{{ request.form['tags'] or tag }}">
-              {%- endfor -%}
-            </div>
+            <div class="article-tags">{{ form.tag0(class="create-tag")}}</div>
           </div>
         </div>
         <!-- End of Tags -->
 
         <div class="center">
-          <input class="submit-btn" type="submit" value="Publish">
+          {{ form.submit()}}
         </div>
       </form>
     </div>

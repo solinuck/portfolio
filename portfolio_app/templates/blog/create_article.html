@@ -8,52 +8,102 @@
 
   <div class="section-center create-article-center">
     <div class="center">
-      <h2>write your article</h2>
+      <h2>{{ legend }}</h2>
     </div>
     <div class="form-box ">
-      <div class="flash center">replace me</div>
+      <form class="form" method="post" action="" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
 
-      <form class="form" method="post" enctype="multipart/form-data">
-        <!-- Title -->
-        <label class="form-label" for="title">Title</label>
-        <input type="text" name="title" maxlength="50" id="title" value="{{ request.form['title'] }}" required>
-        <!-- End of Title -->
-
-        <!-- Image input -->
-        <div class="image-input-container">
-
-          <input type="file" class="hidden-btn" name="image" id="image" oninput="filesize(this)" value="Select file" >
-          <label class="custom-file-label form-label" for="image"><i class="fas fa-upload"></i> Select image</label>
-
-          <span class="selected-image">No image selected</span>
+        <div class="form-group">
+          <!-- Title -->
+          {{ form.title.label(class="form-label")}}
+          {% if form.title.errors %}
+            {{ form.title() }}
+            <div class="invalid-feedback">
+              {% for error in form.title.errors%}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.title(placeholder="Title") }}
+          {% endif%}
+          <!-- End of Title -->
         </div>
 
-        <!-- End of Image input -->
 
-        <!-- Intro -->
-        <label class="form-label" for="body">Introduction</label>
-        <textarea class="article-input" type="text" maxlength="200" name="intro" rows="5" id="body">{% if post %}{{post["intro"]}}{% endif %}</textarea>
-        <!-- End of Intro -->
+        <div class="form-group">
+          <!-- Image input -->
+          {{ form.image.label(class="custom-file-label form-label")}}
+          {% if form.image.errors %}
+            {{ form.image(class="hidden-btn") }}
+            <span class="selected-image">No image selected</span>
+            <div class="invalid-feedback">
+              {% for error in form.image.errors%}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.image(class="hidden-btn") }}
+            <span class="selected-image">No image selected</span>
+          {% endif%}
+          <!-- End of Image input -->
+        </div>
 
-        <!-- Body -->
-        <label class="form-label" for="body">Body</label>
-        <textarea class="article-input" type="text" name="body" rows="10" id="body">{% if post %}{{post["body"]}}{% endif %}</textarea>
-        <!-- End of Body -->
+        <div class="form-group">
+          <!-- Intro -->
+          {{ form.intro.label(class="form-label")}}
+          {% if form.intro.errors %}
+            {{ form.intro() }}
+            <div class="invalid-feedback">
+              {% for error in form.intro.errors%}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.intro(class="article-input", rows='5') }}
+          {% endif%}
+          <!-- End of Intro -->
+        </div>
 
-        <!-- Tags -->
-        <div class="tag-form">
-          <label class="form-label" for="tags">Tags</label>
-          <span class="add-tag-btn" id="add-btn">+</span>
-          <span class="delete-tag-btn">-</span>
-          <div class="tag-field">
-            <span class="tag-text">Add at least one Tag</span>
-            <div class="article-tags"><input class="create-tag" name="tag-0" id="tag"></div>
+        <div class="form-group">
+          <!-- Body -->
+          {{ form.body.label(class="form-label")}}
+          {% if form.body.errors %}
+            {{ form.body() }}
+            <div class="invalid-feedback">
+              {% for error in form.body.errors%}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.body(class="article-input", rows='10') }}
+          {% endif%}
+          <!-- end of Body -->
+        </div>
+
+        <div class="form-group">
+          <div class="tag-form">
+            <label class="form-label" for="tags">Tags</label>
+            <span class="add-tag-btn" id="add-btn">+</span>
+            <span class="delete-tag-btn">-</span>
+            <div class="tag-field">
+              <span class="tag-text">Add at least one Tag</span>
+              <div class="article-tags">{{ form.tag0(class="create-tag")}}
+                {% if tags%}
+                  {% for tag in tags[1:]%}
+                    <input class="create-tag" id="tag{{ loop.index }}" name="tag{{ loop.index }}" required tpye="text" value="{{ tag }}">
+                  {% endfor %}
+                {% endif %}
+              </div>
+            </div>
           </div>
         </div>
+        <!-- Tags -->
+
         <!-- End of Tags -->
 
         <div class="center">
-          <input class="submit-btn" type="submit" value="Publish">
+          {{ form.submit()}}
         </div>
       </form>
     </div>

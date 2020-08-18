@@ -11,13 +11,33 @@
       <h2>Login</h2>
     </div>
     <div class="form-box">
-      <div class="flash center">replace me</div>
-      <form class="form" method="post">
-        <input type="text" name="username" id="username" placeholder="Username" required>
-        <input type="password" name="password" id="password"
-          placeholder="Password" required>
+      <form class="auth-form" method="post">
+        {{ form.hidden_tag() }}
+
+        {% if form.email.errors %}
+          {{ form.email(placeholder="Email", class="is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.email.errors%}
+              <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+        {% else %}
+          {{ form.email(placeholder="Email") }}
+        {% endif%}
+
+        {% if form.password.errors %}
+          {{ form.password(placeholder="Password", class="is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.password.errors%}
+              <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+        {% else %}
+          {{ form.password(placeholder="Password") }}
+        {% endif%}
         <div class="center">
-          <input class="submit-btn" type="submit" value="Login">
+          <!-- <input class="submit-btn" type="submit" value="Login"> -->
+          {{ form.submit(class="submit-btn") }}
         </div>
       </form>
     </div>
