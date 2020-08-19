@@ -13,6 +13,4 @@ dist/
 build/
 *.egg-info/
 
-config.py
-
 portfolio_app/static/css/fontawesome-free-5.12.1-web/
