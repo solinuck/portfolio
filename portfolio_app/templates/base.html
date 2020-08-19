@@ -33,13 +33,13 @@
       <!-- nav links -->
       <ul class="nav-links">
         <li>
-          <a href="/">home</a>
+          <a href="{{ url_for('main.home_view')}}">home</a>
         </li>
         <li>
-          <a href="/about">about</a>
+          <a href="{{ url_for('main.about_view')}}">about</a>
         </li>
         <li>
-          <a href="/projects">projects</a>
+          <a href="{{ url_for('main.projects_view')}}">projects</a>
         </li>
         <li>
           <a href="{{ url_for('blog.bloglist_view') }}">blog</a>
@@ -59,13 +59,13 @@
       <!-- nav links -->
       <ul class="sidebar-links">
         <li>
-          <a href="/">home</a>
+          <a href="{{ url_for('main.home_view') }}">home</a>
         </li>
         <li>
-          <a href="/about">about</a>
+          <a href="{{ url_for('main.about_view') }}">about</a>
         </li>
         <li>
-          <a href="/projects">projects</a>
+          <a href="{{ url_for('main.projects_view') }}">projects</a>
         </li>
         <li>
           <a href="{{ url_for('blog.bloglist_view') }}">blog</a>

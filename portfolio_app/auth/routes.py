@@ -1,28 +1,23 @@
-import functools
-
 from flask import (
     Blueprint,
     flash,
-    g,
     redirect,
     render_template,
     request,
-    session,
     url_for,
-    current_app,
 )
-from portfolio_app.forms import RegistrationForm, LoginForm
-from portfolio_app import db, bcrypt
-from portfolio_app.models import User
 from flask_login import login_user, current_user, logout_user
+from portfolio_app import db, bcrypt
+from portfolio_app.auth.forms import RegistrationForm, LoginForm
+from portfolio_app.models import User
 
-bp = Blueprint("auth", __name__, url_prefix="/auth")
+auth = Blueprint("auth", __name__, url_prefix="/auth")
 
 
-@bp.route("/register", methods=["GET", "POST"])
+@auth.route("/register", methods=["GET", "POST"])
 def register_view():
     if current_user.is_authenticated:
-        return redirect(url_for("home.home_view"))
+        return redirect(url_for("main.home_view"))
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(
@@ -44,7 +39,7 @@ def register_view():
     return render_template("auth/register.html", form=form)
 
 
-@bp.route("/login", methods=["GET", "POST"])
+@auth.route("/login", methods=["GET", "POST"])
 def login_view():
     form = LoginForm()
     if form.validate_on_submit():
@@ -57,7 +52,7 @@ def login_view():
             return (
                 redirect(next_page)
                 if next_page
-                else redirect(url_for("home.home_view"))
+                else redirect(url_for("main.home_view"))
             )
             flash("Login successful.", "success")
         else:
@@ -69,7 +64,7 @@ def login_view():
     return render_template("auth/login.html", form=form)
 
 
-@bp.route("/logout")
+@auth.route("/logout")
 def logout_view():
     logout_user()
-    return redirect(url_for("home.home_view"))
+    return redirect(url_for("main.home_view"))

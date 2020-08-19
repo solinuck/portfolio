@@ -1,6 +1,5 @@
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, SubmitField, TextAreaField
+from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import (
     DataRequired,
     Length,
@@ -43,32 +42,3 @@ class LoginForm(FlaskForm):
         "Password", validators=[DataRequired(), Length(min=5)]
     )
     submit = SubmitField("Login")
-
-
-class PostForm(FlaskForm):
-    title = StringField(
-        "Title", validators=[DataRequired(), Length(min=2, max=100)]
-    )
-    intro = TextAreaField(
-        "Intro", validators=[DataRequired(), Length(min=2, max=200)]
-    )
-    image = FileField(
-        "Select Image", validators=[FileAllowed(["jpg", "jpeg", "png"])]
-    )
-    body = TextAreaField("Body", validators=[DataRequired()])
-    tag0 = StringField(
-        "tag0", validators=[DataRequired(), Length(min=2, max=15)]
-    )
-    # tag1 = StringField(
-    #     "tag1", validators=[Length(min=2, max=15)], default=""
-    # )
-    # tag2 = StringField(
-    #     "tag2", validators=[Length(min=2, max=15)], default=""
-    # )
-    # tag3 = StringField(
-    #     "tag3", validators=[Length(min=2, max=15)], default=""
-    # )
-    # tag4 = StringField(
-    #     "tag4", validators=[Length(min=2, max=15)], default=""
-    # )
-    submit = SubmitField("Publish")

@@ -1318,6 +1318,30 @@ Bloglist
   background-color: #cc0000;
 }
 
+.page-nums {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.page-num {
+  padding: 0.5rem;
+  background: var(--clr-white);
+  color: var(--clr-primary-5);
+  border: 1px solid var(--clr-primary-5);
+  border-radius: 0.2rem;
+  transition: var(--transition);
+}
+
+.current-page {
+  color: var(--clr-white);
+  background: var(--clr-primary-5);
+}
+
+.page-num:hover {
+  color: var(--clr-white);
+  background: var(--clr-primary-5);
+}
+
 /*
 ===============
 Single Blog Article

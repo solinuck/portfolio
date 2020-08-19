@@ -31,10 +31,6 @@ class Post(db.Model):
     )
     body = db.Column(db.Text, nullable=False)
     tags = db.Column(db.String(75), nullable=False)
-    # tag1 = db.Column(db.String(15))
-    # tag2 = db.Column(db.String(15))
-    # tag3 = db.Column(db.String(15))
-    # tag4 = db.Column(db.String(15))
     user_id = db.Column(
         db.Integer, db.ForeignKey("user.id"), nullable=False
     )

@@ -130,8 +130,6 @@ if (expandSearchBtn) {
   });
 
   const dropdownBtns = document.querySelectorAll("#dropdown-btn");
-  const yearOptions = document.querySelector(".year-option");
-  const monthOptions = document.querySelector(".month-option");
 
   dropdownBtns.forEach((btn) => {
     const dropdownContent = btn.nextElementSibling;

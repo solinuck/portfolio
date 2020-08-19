@@ -35,7 +35,7 @@
     </div>
 
     <article class="hero-img">
-      <img src="{{ config.IMAGES_PATH }}/home/hero-img.JPG" class="hero-photo" alt="john doe">
+      <img src="{{ config.IMAGES_PATH }}/main/hero-img.JPG" class="hero-photo" alt="john doe">
     </article>
   </div>
 </header>
@@ -46,7 +46,7 @@
   <div class="section-center about-center">
     <!-- about img -->
     <article class="about-img">
-      <img src="{{ config.IMAGES_PATH }}/home/about-img.png" class="hero-photo" alt="about img">
+      <img src="{{ config.IMAGES_PATH }}/main/about-img.png" class="hero-photo" alt="about img">
     </article>
     <!-- about info -->
     <article class="about-info">
@@ -99,26 +99,28 @@
     <p class="no-articles">Unfortunately, there are no blog articles yet :&#40;</p>
   {% else %}
     <div class="section-center blog-center">
-      {% for i in range(n_article) %}
+      {% for post in posts %}
+        {% set date_posted = post.date_posted.strftime("%m/%d/%Y") -%}
         <!-- single article -->
         <div class="card">
           <!-- front of the card -->
           <div class="card-side card-front">
-            <a class="blog-card-link" href="{{ url_for('blog.single_article_view', id=posts[i]['id'], title=posts[i]['title']| lower | replace(" ", "-")) }}">
+            <a class="blog-card-link" href="{{ url_for('blog.single_article_view', id=post.id, title=post.title| lower | replace(" ", "-")) }}">
+              {% set n_words = post.intro.count(" ") + post.body.count(" ") + 4 %}
               <div class="blog-card-img">
-                <img src="{{ config.IMAGE_UPLOADS_REL }}/{{ posts[i]['image_file']}}" alt="">
-                <div class="reading-time"> {{ posts[i]["reading_min"]}} min read</div>
+                <img src="{{ config.IMAGE_UPLOADS_REL }}/{{ post['image_file']}}" alt="">
+                <div class="reading-time"> {{ (n_words / 255) | round(method="ceil") | int }} min read</div>
               </div>
               <div class="card-info">
-                <h4>{{posts[i]['title']}}</h4>
-                <p>{{posts[i]['intro']}}</p>
+                <h4>{{ post.title }}</h4>
+                <p>{{ post.intro }}</p>
                 <div class="card-footer">
                   <div class="tags">
-                    {% for tag in posts[i]["tags"] %}
-                      <span class="tag">{{tag}}</span>
+                    {% for tag in tags[loop.index0] %}
+                      <span class="tag">{{ tag }}</span>
                     {% endfor %}
                   </div>
-                  <p>{{(posts[i]['date_posted'])[:10] }}</p>
+                  <p>{{ date_posted[:7] + date_posted[9:] }}</p>
                 </div>
               </div>
             </a>
@@ -129,18 +131,18 @@
           <div class="card-side card-back">
               <div class="article-beginning">
                 <div class="fade-out"></div>
-                {%- for p in posts[i]["body"] -%}
+                {%- for p in body[loop.index0] -%}
                   {% if p == "" %}
                     <br>
                   {% endif %}
                   <p>{{ p }}</p>
                 {%- endfor -%}
-                <a href="{{ url_for('blog.single_article_view', id=posts[i]['id'], title=posts[i]['title']| lower | replace(" ", "-")) }}" class="btn read-more">read more</a>
+                <a href="{{ url_for('blog.single_article_view', id=post.id, title=post.title| lower | replace(" ", "-")) }}" class="btn read-more">read more</a>
               </div>
               <div class="tags">
-                {% for tag in posts[i]["tags"] %}
+                {% for tag in tags[loop.index0] %}
                   <a class="tag-link" href="{{ url_for('blog.bloglist_view', search=tag.lower())}}">
-                    {{tag}}
+                    {{ tag }}
                   </a>
                 {% endfor %}
               </div>
