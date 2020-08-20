@@ -214,7 +214,7 @@ def update_view(id):
         "blog/create_article.html",
         legend="Update Post",
         form=form,
-        tags=post["tags"],
+        tags=eval(post.tags),
         image_file=True,
     )
 

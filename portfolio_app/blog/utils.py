@@ -29,9 +29,9 @@ def search_func(posts, search):
 def save_image(form_image):
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_image.filename)
-    picture_fn = random_hex + f_ext
-    picture_path = os.path.join(
-        current_app.config["BLOG_UPLOADS"], picture_fn
+    image_fn = random_hex + f_ext
+    image_path = os.path.join(
+        current_app.root_path, "static/images/blog_uploads", image_fn
     )
-    form_image.save(picture_path)
-    return picture_fn
+    form_image.save(image_path)
+    return image_fn
