@@ -84,6 +84,7 @@
     <!-- sort by topic -->
     <div class="pick-topic">
       <h3 class="center">Pick a topic</h3>
+      <div class="tags">
         {% for topics_per_post in topics %}
           {% for topic in topics_per_post %}
             <a class="tag-link" href="{{ url_for('blog.bloglist_view', search=topic.lower(), year=year, month=month, expandsearch=expandsearch, _method='GET') }}">
@@ -91,6 +92,7 @@
             </a>
           {% endfor %}
         {% endfor %}
+      </div>
     </div>
     <!-- end of sort by topic -->
   </div>
