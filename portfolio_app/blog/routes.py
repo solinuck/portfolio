@@ -91,7 +91,7 @@ def bloglist_view(search, expandsearch, year, month):
         body.append(eval(post.body))
 
     if search is None:
-        search_posts = posts
+        search_posts = posts.items
     else:
         if request.method == "POST":
             search = request.form["search"]
