@@ -160,7 +160,6 @@ p {
   letter-spacing: var(--spacing);
   display: inline-block;
   font-weight: 700;
-  -webkit-transition: var(--transition);
   transition: var(--transition);
   font-size: 0.875rem;
   border: 2px solid transparent;
@@ -301,6 +300,7 @@ Navbar
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     justify-items: center;
+    -moz-column-gap: 2rem;
     column-gap: 2rem;
     justify-self: end;
   }
@@ -529,6 +529,7 @@ Hero
 .hero-photo {
   max-width: 22rem;
   max-height: 37rem;
+  -o-object-fit: cover;
   object-fit: cover;
   border-radius: var(--radius);
   position: relative;
@@ -624,6 +625,7 @@ Projects
   transition: var(--transition);
   border-radius: var(--radius);
   height: 17rem;
+  -o-object-fit: cover;
   object-fit: cover;
 }
 
@@ -653,6 +655,7 @@ Projects
   .projects-center {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    -moz-column-gap: 2rem;
     column-gap: 2rem;
   }
 }
@@ -867,6 +870,7 @@ Blog
   width: 100%;
   height: 100%;
   transition: all 1.2s linear;
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   border-radius: var(--radius);
 }
@@ -901,6 +905,7 @@ Blog
   width: 100%;
   height: 100%;
   background-image: linear-gradient(to bottom, transparent, var(--clr-primary-9));
+  background: -webkit-gradient(top, bottom, transparent, var(--clr-primary-9));
 }
 
 .article-beginning p {
@@ -939,6 +944,7 @@ Blog
 
 .card-front img {
   height: 13rem;
+  -o-object-fit: cover;
   object-fit: cover;
   border-radius: var(--radius) var(--radius) 0 0;
 }
@@ -1272,8 +1278,8 @@ Bloglist
   width: 120px;
   text-align: center;
   position: absolute;
-  top: 2rem;
-  left: -500%;
+  top: 0;
+  left: 2rem;
   z-index: 3;
   display: none;
 }
@@ -1286,8 +1292,17 @@ Bloglist
 .year-option a, .month-option a {
   padding: 0.1rem;
   font-size: 1rem;
-  color: var(--clr-primary-5);
+  text-align: left;
+  padding-left: 1rem;
+  color: var(--clr-primary-1);
   margin-bottom: 0;
+  display: block;
+  transition: var(--transition);
+}
+
+.year-option a:hover, .month-option a:hover {
+  padding-left: 1.5rem;
+  color: var(--clr-primary-6);
 }
 
 .search-link {
@@ -1357,6 +1372,7 @@ Single Blog Article
   height: 20rem;
   max-width: 1170px;
   margin: 0 auto 2rem auto;
+  -o-object-fit: cover;
   object-fit: cover;
 }
 
@@ -1411,21 +1427,18 @@ Single Blog Article
   background: var(--clr-grey-10);
   display: grid;
   grid-template-columns: 30% 1fr;
-  -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
-  -moz-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
   box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
   transition: var(--transition);
 }
 
 .article-footer-card:hover {
   transform: translate(-0.2rem, 0.2rem);
-  -webkit-box-shadow: 6px -6px 5px 0px rgba(0, 0, 0, 0.54);
-  -moz-box-shadow: 6px -6px 5px 0px rgba(0, 0, 0, 0.54);
   box-shadow: 6px -6px 5px 0px rgba(0, 0, 0, 0.54);
 }
 
 .article-footer-photo {
   height: 100%;
+  -o-object-fit: cover;
   object-fit: cover;
   /* height: 5rem; */
 }
@@ -1526,20 +1539,35 @@ Timeline
 
 .quote-part1 {
   /* animation */
+  -webkit-animation: slideFromLeft 4s ease-in-out 1;
   animation: slideFromLeft 4s ease-in-out 1;
 }
 
 .quote-part2 {
   /* animation */
+  -webkit-animation: show 5s ease-in-out 1;
   animation: show 5s ease-in-out 1;
 }
 
 .quote-part3 {
   /* animation */
+  -webkit-animation: slideFromRight 4s ease-in-out 1;
   animation: slideFromRight 4s ease-in-out 1;
 }
 
 /* animations */
+@-webkit-keyframes show {
+  0% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+
+  70% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 @keyframes show {
   0% {
     opacity: 0;
@@ -1552,12 +1580,40 @@ Timeline
   }
 }
 
+@-webkit-keyframes slideFromRight {
+  0% {
+    transform: translateX(1000px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
 @keyframes slideFromRight {
   0% {
     transform: translateX(1000px);
   }
 
   100% {
+    transform: translateX(0);
+  }
+}
+
+@-webkit-keyframes slideFromLeft {
+  0% {
+    transform: translateX(-1000px);
+  }
+
+  30% {
+    transform: translateX(200px);
+  }
+
+  45% {
+    transform: translateX(-50px);
+  }
+
+  60% {
     transform: translateX(0);
   }
 }
@@ -1673,6 +1729,7 @@ Skills
   .skills-center {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    -moz-column-gap: 2rem;
     column-gap: 2rem;
   }
 }

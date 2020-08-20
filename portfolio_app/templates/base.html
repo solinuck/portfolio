@@ -11,10 +11,8 @@
   <script src="https://kit.fontawesome.com/e1980685f2.js" crossorigin="anonymous"></script>
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="{{config['IMAGES_PATH']}}/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="{{config['IMAGES_PATH']}}/favicon-16x16.png">
-
-  {% block css_link %}{% endblock%}
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for( 'static', filename='images/favicon-32x32.png') }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for( 'static', filename='images/favicon-16x16.png') }}">
 </head>
 
 <body>
@@ -24,7 +22,7 @@
       <!-- nav header -->
       <div class="nav-header">
         <a href="/">
-          <img src="{{ config.IMAGES_PATH }}/logo.svg" class="nav-logo" alt="nav logo">
+          <img src="{{ url_for( 'static', filename='images/logo.svg') }}" class="nav-logo" alt="nav logo">
         </a>
         <button class="nav-btn" id="nav-btn">
           <i class="fas fa-bars"></i>

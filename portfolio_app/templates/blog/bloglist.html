@@ -122,7 +122,7 @@
               <!-- front of the card -->
               {% set n_words = post.intro.count(" ") + post.body.count(" ") + 4 %}
               <div class="blog-card-img">
-                <img src="{{ config['IMAGE_UPLOADS_REL'] }}/{{ post['image_file'] }}" alt="">
+                <img src="{{ url_for( 'static', filename='images/blog_uploads/' + post.image_file) }}" alt="">
                 <div class="reading-time"> {{ (n_words / 225) | round(method="ceil") | int }} min read</div>
               </div>
               <div class="card-info">

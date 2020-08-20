@@ -9,9 +9,7 @@
     <h2>My Projects</h2>
     <div class="underline"></div>
     <p class="projects-text">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est voluptas eum
-      cumque! Aut enim, facilis expedita eius laborum consectetur. Et
-      accusantium est rerum voluptatibus a dolores doloremque quidem magni mollitia?
+      I started my programming journey in June 2019. Here you can see some of my projects, which will redirect you to the corresponding Github repositories.
     </p>
   </div>
   <!-- end of section title -->
@@ -19,7 +17,7 @@
     <!-- single project -->
     <a href="https://vispa.physik.rwth-aachen.de/" target="_blank" class="project-5">
       <article class="project">
-        <img src="{{ config.IMAGES_PATH }}/projects/vispa-frontend.png" alt="single project"
+        <img src="{{ url_for( 'static', filename='images/projects/vispa-frontend.png') }}" alt="single project"
           class="project-img">
         <div class="project-info">
           <h4>VISPA Webpage</h4>

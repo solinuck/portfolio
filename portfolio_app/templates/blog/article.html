@@ -3,7 +3,7 @@
 {% block title %}" Blog - {{ post.title }}"{% endblock %}
 
 {% block content %}
-  <img class="single-article-image" src="{{ config['IMAGE_UPLOADS_REL'] }}/{{ post['image_file'] }}" alt="">
+  <img class="single-article-image" src="{{ url_for('static', filename='images/blog_uploads/'+ post.image_file) }}" alt="">
   <div class="blog-article">
     <article class="single-article section-center">
       <h1 class="article-title">{{ post.title }}</h1>
@@ -44,7 +44,7 @@
           <div class="article-footer-card">
             <div class="article-footer-img">
               <a href="{{ url_for('blog.single_article_view', id=prev_post.id, title=prev_post.title| lower | replace(" ", "-")) }}">
-                <img class="article-footer-photo" src="{{ config['IMAGE_UPLOADS_REL'] }}/{{ prev_post.image_file }}" alt="">
+                <img class="article-footer-photo" src="{{ url_for( 'static', filename='images/blog_uploads/' + prev_post.image_file) }}" alt="">
               </a>
             </div>
             <div class="article-footer-info">
@@ -63,7 +63,7 @@
           <div class="article-footer-card">
             <div class="article-footer-img">
               <a href="{{ url_for('blog.single_article_view', id=next_post.id, title=next_post.title| lower | replace(" ", "-")) }}">
-                <img class="article-footer-photo" src="{{ config['IMAGE_UPLOADS_REL'] }}/{{ next_post.image_file }}" alt="">
+                <img class="article-footer-photo" src="{{ url_for( 'static', filename='images/blog_uploads/' + next_post.image_file) }}" alt="">
               </a>
             </div>
             <div class="article-footer-info">
