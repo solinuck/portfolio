@@ -14,16 +14,16 @@
           <h4>freelance web developer</h4>
           <ul class="social-icons hero-icons">
             <li>
-              <a href="https://github.com/solinuck/" class="social-icon"><i class="fab fa-github"></i></a>
+              <a href="https://github.com/solinuck/" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
             </li>
             <li>
-              <a href="https://www.facebook.com/erwin.rudi.3" class="social-icon"><i class="fab fa-facebook"></i></a>
+              <a href="https://www.facebook.com/erwin.rudi.3" target="_blank" class="social-icon"><i class="fab fa-facebook"></i></a>
             </li>
             <li>
-              <a href="https://www.linkedin.com/in/erwin-rudi-0a694b197/" class="social-icon"><i class="fab fa-linkedin"></i></a>
+              <a href="https://www.linkedin.com/in/erwin-rudi-0a694b197/" target="_blank" class="social-icon"><i class="fab fa-linkedin"></i></a>
             </li>
             <li>
-              <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+              <a href="#" class="social-icon"><i class="fab fa-instagram" target="_blank"></i></a>
             </li>
           </ul>
           <btn class="btn hero-btn">Get in contact</btn>
@@ -35,7 +35,7 @@
     </div>
 
     <article class="hero-img">
-      <img src="{{ config.IMAGES_PATH }}/main/hero-img.JPG" class="hero-photo" alt="john doe">
+	<img src="{{ url_for("static", filename='images/main/hero-img.JPG') }}" class="hero-photo" alt="hero image">
     </article>
   </div>
 </header>
@@ -46,7 +46,7 @@
   <div class="section-center about-center">
     <!-- about img -->
     <article class="about-img">
-      <img src="{{ config.IMAGES_PATH }}/main/about-img.png" class="hero-photo" alt="about img">
+      <img src="{{ url_for("static", filename='images/main/about-img.png') }}" class="hero-photo" alt="about img">
     </article>
     <!-- about info -->
     <article class="about-info">
