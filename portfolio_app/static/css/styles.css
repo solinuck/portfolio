@@ -1179,6 +1179,10 @@ Tags
   flex-wrap: wrap;
 }
 
+.justify-center {
+  justify-content: center;
+}
+
 .tag, .tag-link {
   padding: 0.1rem 0.2rem;
   margin-right: 0.5rem;

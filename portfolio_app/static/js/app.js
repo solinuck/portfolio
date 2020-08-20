@@ -188,7 +188,7 @@ function displayRepos(repos) {
       <div class="project-info">
         <h4>${repo.name}</h4>
         <p>${repo.description}</p>
-        <div class="tags">
+        <div class="tags justify-center">
           ${topicsString}
         </div>
       </div>
