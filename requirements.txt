@@ -28,7 +28,7 @@ prompt-toolkit==3.0.5
 ptyprocess==0.6.0
 pycparser==2.20
 PyGithub==1.52
-Pygments==2.6.1
+Pygments==2.7.4
 PyJWT==1.7.1
 requests==2.24.0
 six==1.15.0
